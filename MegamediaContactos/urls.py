@@ -20,11 +20,12 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth import views as auth_views
 
-from MegamediaContactosApp.views.view_mant_sistema import home
+from MegamediaContactosApp.views.view_mant_sistema import home, obtener_menus
 
 urlpatterns = [
     path('logout/', LogoutView.as_view(next_page='/'), name='logout'),
     path('accounts/login/', LoginView.as_view(template_name='registration/login.html'), name='login'),  # Define tu vista de login aquí
     path('', home, name='home'),  # Página de inicio protegida
     path('admin/', admin.site.urls),
+    path('obtener_menus/',obtener_menus,name='obtener_menus'),
 ]
