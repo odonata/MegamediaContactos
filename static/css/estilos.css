@@ -1,0 +1,452 @@
+/* Contenido del archivo estilos.css */
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border: 10px solid orange; /* Establece un borde sólido naranja de 10px */
+    margin: 0; /* Elimina los márgenes predeterminados para asegurar que el borde abarque todo */
+    box-sizing: border-box; /* Asegura que el ancho y alto del borde se incluyan en la anchura total y altura del elemento */
+
+}
+
+#logo {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 100px;
+    height: auto;
+}
+
+#logo-adicional {
+    position: absolute;
+    top: 10px; /* Mismo valor que el top de #logo */
+    right: 10px; /* Distancia desde el borde derecho */
+    width: 100px;
+    height: auto;
+    z-index: 1; /* Asegura que esté encima de otros elementos, si es necesario */
+}
+
+.boton {
+    display: inline-block;
+    padding: 15px 30px;
+    width: 300px;
+    font-size: 50px;
+    font-weight: bold;
+    background-color: rgba(258, 178, 51, 0.7);
+    color: white;
+    text-decoration: none;
+    margin: 10px;
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: 0 4px 9px rgba(255, 255, 255, 0.5);
+}
+
+.franja-productos {
+    background-color: rgba(258, 178, 51, 0.7);
+    color: white;
+    padding: 10px;
+    font-size: 24px;
+    text-align: center;
+}
+.header-container {
+    display: flex;
+    align-items: center;
+}
+
+/* Ajustes para el botón "Ir a Promociones" */
+.boton-ir-promociones {
+    background-color: #e94e1b;
+    color: white;
+    padding: 10px;
+    font-size: 24px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-left: 10px; /* Agrega un margen izquierdo */
+}
+
+.tabla-productos tbody TH {
+   border: none;
+}
+
+.tabla-productos tbody td {
+   border: none;
+}
+
+.tabla-productos {
+    /* Añade un margen inferior para separar la tabla de la franja de pago */
+    margin-bottom: 20px;
+}
+
+.tabla-productos th, .tabla-productos td {
+    padding: 10px;
+    border: 1px solid #fff;
+}
+
+/*********************************************/
+.tabla-productosdetalle tbody TH {
+   border: none;
+}
+
+.tabla-productosdetalle tbody td {
+   border: none;
+}
+
+.tabla-productosdetalle {
+    /* Añade un margen inferior para separar la tabla de la franja de pago */
+    margin-bottom: 20px;
+}
+
+.tabla-productosdetalle th, .tabla-productosdetalle td {
+    padding: 10px;
+    border: 1px solid #fff;
+}
+
+.tabla-productosdetalle tbody tr {
+    background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco al 80% de opacidad */
+    font-weight: bold; /* Texto en negrita */
+    border-bottom: 1px solid #fff; /* Borde inferior para separar visualmente */
+}
+
+/*********************************************/
+
+.columna-cantidad {
+    background-color: #e94e1b;
+    color: white;
+}
+
+.columna-cantidad-agregado {
+    background-color: #3aaa35;
+}
+
+.columna-cantidad-quitar {
+    background-color: #e94e1b;
+}
+
+.columna-cantidad button {
+    background-color: transparent;
+    border: none;
+}
+
+.columna-cantidad button img {
+    width: 100%; /* Ajusta el tamaño de la imagen al 100% del botón */
+    height: auto;
+}
+
+.franja-pago {
+    background-color: darkorange;
+    width: 70%; /* Ajusta según sea necesario */
+    margin: 10px auto 10px; /* Centra la franja de pago y añade margen abajo de 10px */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-radius: 5px; /* Esquinas redondeadas */
+}
+
+.franja-pago > div {
+    display: flex;
+    flex: 1;
+    justify-content: flex-start; /* Alinea los elementos span a la izquierda */
+}
+
+.franja-pago img {
+    width: 50px;
+    height: auto;
+    margin-right: 10px;
+}
+
+#boton-pagar {
+    display: flex;
+    justify-content: center; /* Centra el contenido del botón */
+    align-items: center; /* Alinea verticalmente el contenido del botón */
+    margin-left: auto; /* Alinea el botón a la derecha */
+    padding: 10px 20px; /* Ajusta el padding del botón */
+    border-radius: 5px; /* Esquinas redondeadas para el botón */
+    background-color: darkorange; /* Color de fondo del botón */
+    color: white; /* Color del texto del botón */
+    text-decoration: none; /* Elimina el subrayado del texto */
+    font-size: 18px; /* Tamaño del texto */
+    border: 2px solid white;
+}
+
+
+
+#boton-pagar img {
+    margin-right: 10px; /* Espacio a la derecha de la imagen dentro del botón */
+    width: 30px; /* Ancho fijo para la imagen */
+    height: auto; /* Altura automática para mantener la proporción */
+}
+
+.franja-pago span {
+    font-size: 80px; /* Tamaño de la letra */
+    font-weight: bold; /* Letra en negrita */
+    color: darkorange; /* Color de la letra */
+}
+
+.boton-volver {
+    background-color: #f39200;
+    color: white;
+    padding: 15px 30px;
+    font-size: 24px;
+    text-decoration: none;
+    border-radius: 5px;
+    box-shadow: 0 4px 9px rgba(255, 255, 255, 0.5);
+}
+
+.boton-salir {
+    background-color: orange;
+    color: white;
+    padding: 15px 30px;
+    font-size: 24px;
+    text-decoration: none;
+    border-radius: 5px;
+    box-shadow: 0 4px 9px rgba(255, 255, 255, 0.5);
+    position: fixed;
+    top: 20px; /* Ajusta según sea necesario */
+    right: 20px; /* Ajusta según sea necesario */
+}
+
+.boton-salir {
+    background-color: orange;
+    color: white;
+    padding: 15px 30px;
+    font-size: 24px;
+    text-decoration: none;
+    border-radius: 5px;
+    box-shadow: 0 4px 9px rgba(255, 255, 255, 0.5);
+    position: fixed;
+    top: 20px; /* Ajusta según sea necesario */
+    right: 20px; /* Ajusta según sea necesario */
+}
+
+.boton-reintentar {
+    font-size: 24px;
+    background-color: orange;
+    color: white; /* Color del texto blanco */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin: 0 auto; /* Alinear al centro horizontalmente */
+    display: block; /* Convertir a bloque para poder usar margen automático */
+}
+
+.franja-pago div span {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+}
+
+
+
+.container-productos {
+    margin-top: 400px;
+    display: flex;
+    justify-content: center; /* Centra el contenido horizontalmente */
+}
+
+.producto {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px; /* Ajusta el margen según sea necesario */
+}
+
+.producto-descripcion {
+    text-align: center;
+    font-weight: bold;
+    margin: 0; /* Ajusta el margen según sea necesario */
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Columnas adaptables */
+    gap: 30px; /* Espacio entre los elementos de la grilla */
+    grid-row-gap: 25px; /* Espacio vertical entre las filas */
+    padding: 20px;
+    max-width: 800px; /* Ancho máximo del contenedor */
+    margin: 0 auto; /* Centra horizontalmente el contenedor */
+}
+
+  .grid-item {
+    background-color: #EA3F1E; /* Mantén tu color de fondo deseado */
+    background-size: cover; /* Asegura que la imagen de fondo cubra todo el div */
+    background-position: center; /* Centra la imagen de fondo */
+    border: 6px solid rgba(249, 178, 51, 0.7);
+    border-radius: 20px;
+    padding: 20px;
+    text-align: center;
+    color: white;
+    position: relative; /* Necesario para el correcto posicionamiento de los elementos internos */
+    height: 260px; /* Ajusta la altura según necesites */
+      width: 260px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* Alinea el contenido textual y botones al fondo del div */
+}
+   .grid-item img {
+       width: 70px; /* Ajusta según necesites */
+       height: auto;
+       margin-bottom: 15px; /* Espacio debajo de la imagen */
+   }
+
+.acciones {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px; /* Espacio entre botones y contador */
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo negro con 50% de transparencia */
+    padding: 10px; /* Añade un poco de padding alrededor de los botones y el contador */
+    border-radius: 10px; /* Opcional: añade bordes redondeados para suavizar el diseño */
+}
+
+   .contador {
+       font-size: 18px;
+       font-weight: bold;
+   }
+
+   .acciones button {
+       background: none;
+       border: none;
+       cursor: pointer;
+   }
+
+   .boton-ir-promociones, .boton-pagar {
+       display: block;
+       text-align: center;
+       margin: 20px auto;
+       padding: 10px;
+       background-color: rgba(249, 178, 51, 0.7);
+       color: white;
+       text-decoration: none;
+       border-radius: 5px;
+   }
+
+#idFormPago {
+    width: 100%; /* Asegura que el formulario ocupe todo el ancho disponible */
+}
+
+#idFormPago .tabla-productosdetalle, #idFormPago .header-container {
+    min-width: 800px; /* Establece un ancho mínimo para evitar que se reduzcan */
+    width: auto; /* Permite que el tamaño se ajuste al contenido */
+}
+
+.boton-paginacion {
+    padding: 8px 15px;
+    margin: 5px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.boton-paginacion:hover {
+    background-color: #0056b3;
+}
+
+#ticket-info {
+    color: white;
+    background-color: rgba(0, 191, 255, 0.5);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 0;
+    display: none; /* Asumiendo que inicialmente está oculto */
+}
+
+.swiper {
+  width: 90%; /* Ajusta el ancho del carrusel */
+  height: auto; /* Para ajustar la altura automáticamente */
+  margin: auto; /* Centrar el carrusel si es necesario */
+  display: flex;
+  justify-content: center; /* Centra horizontalmente el contenido */
+}
+
+
+.swiper.mySwiper {
+    position: fixed;
+    top: 300px; /* Fija el carrusel 300px desde la parte superior de la ventana */
+    /*left: 0;  Ajusta la posición horizontal según sea necesario */
+    z-index: 1000; /* Ajusta el índice z si es necesario */
+}
+
+.swiper-slide {
+    position: relative;
+}
+
+.swiper-slide img {
+  max-width: 100%; /* Permite que la imagen se ajuste al ancho del slide */
+  max-height: 400px; /* Altura máxima para asegurar que la imagen se vea entera */
+  object-fit: contain; /* Asegura que la imagen se ajuste dentro del contenedor sin cortarse */
+  border-radius: 40px; /* Esquinas redondeadas */
+    border: 10px solid orange; /* Marco naranja */
+
+}
+
+.elemento-parpadeante {
+    animation: parpadeo 2s infinite;
+    border: 10px solid orange; /* Ajusta el grosor y color del borde */
+}
+
+.modalPago {
+  display: none; /* Por defecto, la ventana modal está oculta */
+  position: fixed; /* Permite que la ventana modal esté fija en la pantalla */
+  z-index: 1000; /* Asegura que la ventana modal esté en la parte superior */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.modal-content-pago {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 100px;
+  padding: 20px;
+  box-sizing: border-box;
+  text-align: center; /* Para centrar horizontalmente el contenido */
+  border-radius: 10px; /* Agrega esquinas redondeadas */
+}
+
+.btn-primary {
+  font-size: 18px; /* Establece el tamaño de la fuente del botón en 18px */
+  display: inline-block; /* Hace que el botón sea un bloque para poder centrarlo verticalmente */
+  vertical-align: middle; /* Centra verticalmente el botón */
+}
+
+/**
+botones incrementar y decrementar en detalkle_productos
+**/
+
+.btn-incrementar, .btn-decrementar {
+    background-color: rgba(0, 0, 0, 0.6); /* Fondo negro con 60% de transparencia */
+    border: none; /* Quitar el borde del botón */
+    width: 30px; /* Ajusta el tamaño del botón */
+    height: 30px; /* Ajusta el tamaño del botón */
+    background-size: contain; /* Asegura que la imagen se ajuste al tamaño del botón */
+    background-repeat: no-repeat; /* No repetir la imagen */
+    background-position: center; /* Centrar la imagen en el botón */
+    cursor: pointer; /* Cambia el cursor al pasar por el botón */
+}
+
+/* Estilo para el botón incrementar con imagen */
+.btn-incrementar {
+    background-image: url('/static/imgs/img-corporativo/icono-mas.png');
+}
+
+/* Estilo para el botón decrementar con imagen */
+.btn-decrementar {
+    background-image: url('/static/imgs/img-corporativo/icono-memos.png');
+}

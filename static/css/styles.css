@@ -1,0 +1,119 @@
+{% load static %}
+
+
+#datos-menu-groupbox {
+    font-family: inherit;
+    margin-top: 1px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #F5F5F5;
+
+}
+
+#menu-items-table {
+    width: 100%; /* Establece un ancho del 100% */
+    max-height: 800px; /* Ajusta la altura máxima según tus necesidades */
+    /* Agrega una barra de desplazamiento vertical si es necesario */
+}
+
+#items-table {
+    font-family: inherit;
+    font-size: 14px;
+    width: 100%; /* Establece un ancho del 100% */
+    max-height: 800px; /* Ajusta la altura máxima según tus necesidades */
+    /* Agrega una barra de desplazamiento vertical si es necesario */
+}
+
+#items-table th {
+    font-family: inherit;
+     font-size: 14px;
+    background-color: #2f6e9b;
+    color: #fff;
+    font-weight: bold;
+    overflow-y: scroll;
+    text-align: center; /* Justifica el texto a la derecha */
+}
+
+#items-table td {
+    font-family: inherit;
+     font-size: 14px;
+
+}
+
+#items-table tbody tr:hover{
+    font-family: inherit;
+    font-size: 14px;
+    background-color: #2f6e9b; /* Cambia el color de fondo al pasar el cursor por encima */
+    color: white; /* Cambia el color del texto a blanco */
+}
+
+
+/******************/
+
+#textoDiv {
+        font-family: inherit;
+        font-weight: bold;
+        font-size: large;
+        color: whitesmoke;
+        background-color: #f39200;
+        margin-bottom: 10px; /* Agrega un margen inferior */
+        padding: 20px; /* Ajusta el espacio interior */
+}
+
+/* Estilos para el Botones de paginacion */
+
+#agregar-elemento button {
+        width: 30px;
+        height: 30px;
+        background-color: white;
+        border: 1px solid blue;
+        color: blue;
+        margin-right: 5px; /* Espaciado entre los botones */
+    }
+
+#agregar-elemento input {
+        margin-right: 5px; /* Espaciado entre el input y los botones */
+    }
+
+#modalResultado h2 {
+    background-color: lightblue;
+    text-transform: uppercase;
+}
+
+/* ESTO PARA EL CAMPO DE WARNINGS EN LA VALIDACION DE FORMULARIOS */
+#warn_id {
+            color: red;
+            font-weight: bold;
+            text-transform: uppercase;
+ }
+
+/* DROP DAWN PARA SIMULAR LOS HTML SELECT PERO MOSTRANDO IMAGENES*/
+.dropdown {
+            position: relative;
+            display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 250px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* FIN DROPDOWN*/
