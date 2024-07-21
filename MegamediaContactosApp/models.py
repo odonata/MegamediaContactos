@@ -7,19 +7,6 @@
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 
-
-class Areas(models.Model):
-    area_id = models.AutoField(primary_key=True)
-    nombre_area = models.CharField(max_length=255)
-    creacion = models.DateTimeField()
-    fecha_actualizacion = models.DateTimeField()
-    usuario = models.CharField(max_length=20)
-
-    class Meta:
-        managed = False
-        db_table = 'areas'
-
-
 class AuthGroup(models.Model):
     name = models.CharField(unique=True, max_length=150)
 
@@ -89,21 +76,6 @@ class AuthUserUserPermissions(models.Model):
         unique_together = (('user', 'permission'),)
 
 
-class Clientes(models.Model):
-    cliente_id = models.AutoField(primary_key=True)
-    nombre_cliente = models.CharField(max_length=255)
-    area = models.ForeignKey(Areas, models.DO_NOTHING, blank=True, null=True)
-    email_contacto = models.CharField(max_length=100, blank=True, null=True)
-    fono_contacto = models.CharField(max_length=30, blank=True, null=True)
-    creacion = models.DateTimeField()
-    fecha_actualizacion = models.DateTimeField()
-    usuario = models.CharField(max_length=20)
-
-    class Meta:
-        managed = False
-        db_table = 'clientes'
-
-
 class DjangoAdminLog(models.Model):
     action_time = models.DateTimeField()
     object_id = models.TextField(blank=True, null=True)
@@ -147,3 +119,44 @@ class DjangoSession(models.Model):
     class Meta:
         managed = False
         db_table = 'django_session'
+
+"""
+Esta sección representa las clases del modelo ORM que mapea a las tablas particulares
+para el sistema Megamedia Contactos
+"""
+class Areas(models.Model):
+    area_id = models.AutoField(primary_key=True)
+    nombre_area = models.CharField(max_length=255)
+    creacion = models.DateTimeField()
+    fecha_actualizacion = models.DateTimeField()
+    usuario = models.CharField(max_length=20)
+
+    class Meta:
+        managed = False
+        db_table = 'areas'
+
+
+class Clientes(models.Model):
+    cliente_id = models.AutoField(primary_key=True)
+    nombre_cliente = models.CharField(max_length=255)
+    area = models.ForeignKey(Areas, models.DO_NOTHING, blank=True, null=True)
+    email_contacto = models.CharField(max_length=100, blank=True, null=True)
+    fono_contacto = models.CharField(max_length=30, blank=True, null=True)
+    creacion = models.DateTimeField()
+    fecha_actualizacion = models.DateTimeField()
+    usuario = models.CharField(max_length=150)
+
+    class Meta:
+        managed = False
+        db_table = 'clientes'
+
+class Menu(models.Model):
+    id_menu = models.AutoField(primary_key=True)
+    nombre_menu = models.CharField(max_length=30, blank=True, null=True)
+    pagina_menu = models.CharField(max_length=200)
+    grupos_permisos_carga = models.CharField(max_length=600)
+
+    class Meta:
+        managed = False
+        db_table = 'menu'
+

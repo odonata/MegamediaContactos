@@ -1,0 +1,65 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.5">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    <title>{% block title %}Mantenedor de Sistema{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'bootstrap5/css/bootstrap.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'sweetalert2/sweetalert2.min.css' %}">
+
+    <script src="{% static 'bootstrap5/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'Jquery/js/jquery.min.js' %}"></script>
+    <script src="{% static 'sweetalert2/sweetalert2.all.min.js' %}"></script>
+
+    <style>
+        .nav-link.menu-item {
+        cursor: pointer;
+    }
+</style>
+</head>
+<body style="overflow-y: auto;">
+
+    <div id="ct" class="container-fluid" style="width: 100%;" >
+        <div>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                    <img src="{% static 'imgs/corporativo/Megamedia.svg.png' %}" alt="Logo" width="50" height=30 class="d-inline-block align-text-top">
+                    <a class="navbar-brand">SISTEMA DE CONTACTOS</a>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav">
+                            <!-- Los elementos del menú se generarán aquí dinámicamente -->
+                        </ul>
+                    </div>
+                    <div class="d-flex">
+                        <!-- Nombre de usuario -->
+                        <span class="navbar-text me-3" style="color: blue;"><b>Usuario: {{ request.user.username }} - Perfil al que pertenece: {{ grupos }}</b></span>
+                         <!-- Botón de cerrar sesión -->
+                        <form action="{% url 'logout' %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-info fw-bold">Cerrar sesión</button>
+                        </form>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div id="content">
+            <!-- Aquí se cargarán las páginas -->
+        </div>
+    </div>
+    <p></p>
+
+
+      <script src="/static/js/ajax_adm_mant_sistema.js"></script>
+      <script>
+
+         $(document).ready(function () {
+             getMenus();
+         });
+    </script>
+
+</body>
+</html>
