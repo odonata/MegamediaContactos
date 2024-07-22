@@ -60,3 +60,7 @@ def obtener_menus(request):
     menu = Menu.objects.order_by('nombre_menu').\
               values('nombre_menu', 'pagina_menu')
     return JsonResponse(list(menu), safe=False)
+
+# PERMITE ENVIAR A PAGINA NO ENCONTRADA
+def pagina_noencontrada(request,not_found):
+    return render(request, 'tmpl_pagina_noencontrada.html', status=404)

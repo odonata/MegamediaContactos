@@ -1,0 +1,115 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.5">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    <title>{% block title %}Mantenedor de Categorías{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'bootstrap5/css/bootstrap.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'sweetalert2/sweetalert2.min.css' %}">
+
+    <script src="{% static 'bootstrap5/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'Jquery/js/jquery.min.js' %}"></script>
+    <script src="{% static 'sweetalert2/sweetalert2.all.min.js' %}"></script>
+</head>
+<body style="overflow-y: auto;">
+    <dialog id="modalResultado">
+        <h2> <input type="text" id="estadoResultado_id" disabled="true" size="50"></h2>
+        <p>  <input type="text" id="estadoResultadoMensaje_id" disabled="true" size="50"></p>
+        <button onclick="closeModal()">Cerrar</button>
+    </dialog>
+    <div id="ct" class="container-fluid" style="width: 100%;" >
+            <div>
+                <div id="textoDiv">MANTENEDOR DE ÀREAS DE NEGOCIO</div>
+            </div>
+         <table>
+                <tr>
+                    <td colspan="1">
+                         <button id="botonGuardar" onclick="validarYGuardarCategoria()"  class="btn btn-outline-primary btn-lg" >
+                            Guardar
+                        </button>
+                        <button id="botonLimpiar" onclick="limpiarFormulario()"  class="btn btn-outline-primary btn-lg" >
+                            Limpiar
+                        </button>
+                        <button id="botonSalir" onclick="salir()"  class="btn btn-outline-primary btn-lg" >
+                            Salir
+                        </button>
+                    </td>
+
+                </tr>
+
+                 <tr>
+                    <td colspan="2" >
+                        <textarea id="warn_id" rows="1" cols="100" DISABLED style="display: none;"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" >
+                        <fieldset class="border p-3">
+                            <legend style="margin-bottom: 0;">Datos del Área de Negocios</legend>
+                            <table id="datosCategoria" style="border-collapse: separate; border-spacing: 20px;">
+
+                                 <tr>
+                                    <td><label for="nombre">* Nombre área de Negocio: </label></td>
+                                    <td><input type="text" id="categoria" maxlength="100" size="50" class="form-control"></td>
+
+                                </tr>
+
+                            </table>
+                        </fieldset>
+                    </td>
+                </tr>
+         </table>
+    </div>
+        <p></p>
+     <div id="ct" class="container-fluid" style="width: 100%;" >
+            <div>
+                <div id="textoDiv">Áreas Registradas - buscar: <input type="text" id="campoBusqueda" onkeyup="handleKeyPress(event)">
+</div>
+            </div>
+            <table id="items-table">
+                <thead>
+                    <tr>
+                        <th data-width="70%">Nombre Area</th>
+                        <th data-width="20%">Creación</th>
+                        <th data-width="10%">Fecha Actualización</th>
+                        <th data-width="10%">Usuario Creacion / Modificación</th>
+                        <th data-width="10%">Acciones</th>
+                    </tr>
+                </thead>
+                <!-- Filas con datos del menú -->
+                <tbody>
+
+                </tbody>
+            </table>
+     </div>
+    <div id="agregar-elemento">
+        <button id="inicioPagina" >&lt;&lt; </button>
+        <button id="anteriorPagina">&lt;</button>
+        <label for="totalPaginasr">Página :</label>
+        <input type="text" id="numeroPagina" placeholder="número (1-1000)" size="3">
+        <label for="totalPaginasr">De :</label>
+        <input type="text" id="PaginasTotales" disabled="true" size="3">
+        <button id="siguientePagina">&gt;</button>
+        <button id="ultimaPagina" >&gt;&gt;</button>
+    </div>
+
+    <script src="/static/js/ajax_mant_areas.js"></script>
+
+    <script>
+         var paginaActual                   = 1;
+         var totalPaginas                   = 0;
+         var seleccionadoActual             = 0;
+         var url_get_areas             = "{% url 'get_areas' %}";
+         var filtroBusqueda                 = 'SINFILTROBUSQUEDA';
+
+         $(document).ready(function () {getAreas(url_get_areas,1,'inicio',filtroBusqueda);});
+
+
+    </script>
+
+</body>
+</html>

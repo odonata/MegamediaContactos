@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página no encontrada</title>
+    <!-- Bootstrap CSS -->
+    <link href="{% static 'bootstrap5/css/bootstrap.min.css' %}" rel="stylesheet">
+    <script src="{% static 'bootstrap5/js/bootstrap.bundle.min.js' %}"></script>
+
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="alert alert-danger" role="alert">
+            <h4 class="alert-heading">Página no encontrada</h4>
+            <p>La página que está buscando no se encuentra.</p>
+            <hr>
+            <p class="mb-0">Por favor, verificar la URL o regrese a la página de inicio.</p>
+        </div>
+    </div>
+</body>
+</html>

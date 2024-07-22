@@ -55,8 +55,8 @@
         font-family: inherit;
         font-weight: bold;
         font-size: large;
-        color: whitesmoke;
-        background-color: #f39200;
+        color: black;
+        background-color:  #1DBFEC;
         margin-bottom: 10px; /* Agrega un margen inferior */
         padding: 20px; /* Ajusta el espacio interior */
 }

@@ -20,7 +20,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth import views as auth_views
 
-from MegamediaContactosApp.views.view_mant_sistema import home, obtener_menus
+from MegamediaContactosApp.views.view_mant_areas import get_areas, mant_areas, del_area
+from MegamediaContactosApp.views.view_mant_sistema import home, obtener_menus, pagina_noencontrada
 
 urlpatterns = [
     path('logout/', LogoutView.as_view(next_page='/'), name='logout'),
@@ -28,4 +29,13 @@ urlpatterns = [
     path('', home, name='home'),  # Página de inicio protegida
     path('admin/', admin.site.urls),
     path('obtener_menus/',obtener_menus,name='obtener_menus'),
+    path('get_areas/',get_areas,name='get_areas'),
+    path('mant_areas/',mant_areas,name='mant_areas'),
+    path('del_area/<int:id_area>',del_area,name='del_area'),
+    path('<str:not_found>/', pagina_noencontrada),
+    # no agregar nada despues de esta linea, todos los nuevos urls debes
+    # estar antes de str:not_found
 ]
+
+# Asigna la vista de página no encontrada a la ruta vacía ''
+handler404 = pagina_noencontrada

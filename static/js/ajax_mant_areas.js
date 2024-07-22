@@ -5,20 +5,6 @@ warn_id.addEventListener('mouseover', (event) => {
   event.target.style.pointerEvents = 'none';
 });
 
-//document.addEventListener("DOMContentLoaded", function() {
-    //alert(1);
-    // Añade un escuchador para el cambio en el input de tipo archivo
-    document.getElementById("imagenCategoria").addEventListener("change", function(event) {
-        var reader = new FileReader();
-        reader.onload = function(){
-            var output = document.getElementById('vistaPreviaImagen');
-            output.src = reader.result;
-            // Asegúrate de tener un elemento img con id="vistaPreviaImagen" en tu HTML donde se mostrará la vista previa
-        };
-        reader.readAsDataURL(event.target.files[0]);
-    });
-//});
-
 function validarYGuardarCategoria() {
     var nombreCategoria = document.getElementById("categoria").value;
     var imagenCategoria = document.getElementById("imagenCategoria").files[0];
@@ -54,7 +40,7 @@ function guardarCategoria() {
     .then(response => response.json())
     .then(data => {
         if (data.resultado==='Éxito'){
-            getCategorias(url_get_categorias,1,'inicio',filtroBusqueda);
+            getAreas(url_get_areas,1,'inicio',filtroBusqueda);
             limpiarFormulario();
         }else{
             // Si el resultado no es de éxito, mostrar mensaje de error
@@ -74,15 +60,15 @@ function handleKeyPress(event) {
 
 function buscarCategorias(){
     filtroBusqueda='FILTRO';
-    getCategorias(url_get_categorias,1,'inicio',filtroBusqueda);
+    getAreas(url_get_areas,1,'inicio',filtroBusqueda);
 
 }
 
-/* AJAX getCategorias
-*  Trae todas las categorias registradas
-*  llamando a la vista : get_categorias  de forma paginada
+/* AJAX getAreas
+*  Trae todas las areas registradas
+*  llamando a la vista : getAreas  de forma paginada
 * */
-function getCategorias(pUrl, pagina, tipoCargaPagina, filtroBusquedatxt) {
+function getAreas(pUrl, pagina, tipoCargaPagina, filtroBusquedatxt) {
     var PagTot = document.getElementById('PaginasTotales');
     var NumPag = document.getElementById('numeroPagina');
     var campoBusqueda = document.getElementById('campoBusqueda').value;
@@ -108,37 +94,29 @@ function getCategorias(pUrl, pagina, tipoCargaPagina, filtroBusquedatxt) {
             var tabla = $('#items-table tbody');
             tabla.empty(); // Limpiar la tabla antes de agregar nuevos datos
             $.each(results, function(index, resp) {
-                // Llamar a la vista de imagen para obtener la imagen en formato base64
-                $.ajax({
-                    url: '/vista_de_imagen/categorias/' + resp.imagen, // Usa el nombre de la imagen como parámetro
-                    success: function(base64Image) {
-                        // Construir el elemento <img> en el HTML con la imagen en base64
-                        var imgElement = $('<img>').attr('src', 'data:image/png;base64,' + base64Image).css('width', '150px');
+                // Construir la fila de la tabla
+                var fila = $('<tr>').attr('data-hidden-value', resp.id_categoria)
+                    .append($('<td style="text-align: center;">').text(resp.nombre))
+                    .append($('<td style="text-align: center;">').text(resp.creacion))
+                    .append($('<td style="text-align: center;">').text(resp.fecha_actualizacion))
+                    .append($('<td style="text-align: center;">').text(resp.usuario))
+                    .append($('<td style="text-align: center;">').append($('<button>').addClass('btn btn-outline-danger').text('Eliminar Categoría').click(function() {
+                        eliminarArea(resp.id,resp.nombre);
+                    })));
 
-                        // Construir la fila de la tabla
-                        var fila = $('<tr>').attr('data-hidden-value', resp.id_categoria)
-                            .append($('<td style="text-align: center;">').text(resp.nombre_categoria))
-                            .append($('<td style="text-align: center;">').append(imgElement))
-                            .append($('<td style="text-align: center;">').append($('<button>').addClass('btn btn-outline-info').text('Ver imagen').click(function() {
-                                verImagen( base64Image);
-                            })))
-                            .append($('<td style="text-align: center;">').append($('<button>').addClass('btn btn-outline-danger').text('Eliminar Categoría').click(function() {
-                                eliminarCategoria(resp.id_categoria,resp.nombre_categoria);
-                            })));
+                // Agregar la fila a la tabla
+                tabla.append(fila);
 
-                        // Agregar la fila a la tabla
-                        tabla.append(fila);
-                    }
-                });
+
             });
         }
     });
 }
 
 
-function eliminarCategoria(idCategoria , nomCategoria) {
+function eliminarArea(idArea , nomCategoria) {
     var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-    titulo = `¿Eliminar Categoría \n ${nomCategoria} , estás seguro?`;
+    titulo = `¿Eliminar Área de Negocio \n ${nomCategoria} , estás seguro?`;
     Swal.fire({
       title: titulo,
       text: "No podrá revertir esto.",
@@ -150,7 +128,7 @@ function eliminarCategoria(idCategoria , nomCategoria) {
     }).then((result) => {
       if (result.isConfirmed) {
             $.ajax({
-                url: '/del_categoria/' + idCategoria, // Ajusta esta URL a tu configuración
+                url: '/del_area/' + idArea, // Ajusta esta URL a tu configuración
                 type: 'DELETE', // Utiliza el método HTTP adecuado
                 headers: {
                     'X-CSRFToken': csrfToken
@@ -160,7 +138,7 @@ function eliminarCategoria(idCategoria , nomCategoria) {
                          Swal.fire('¡Éxito!', response.mensaje, 'success').then(() => {
                             // Limpiar y Recargar la lista de categorías
                             limpiarFormulario();
-                            getCategorias(url_get_categorias, 1, 'inicio',filtroBusqueda);
+                            getAreas(url_get_areas, 1, 'inicio',filtroBusqueda);
                          });
                     }else{
                          Swal.fire('Error', response.mensaje, 'error');
@@ -168,7 +146,7 @@ function eliminarCategoria(idCategoria , nomCategoria) {
 
                 },
                 error: function(xhr, status, error) {
-                     Swal.fire('Error', "Al borrar categoria :"+status, 'error');
+                     Swal.fire('Error', "Al borrar Área de Negocio :"+status, 'error');
 
                 }
             });
@@ -179,47 +157,13 @@ function eliminarCategoria(idCategoria , nomCategoria) {
 }
 
 
-function verImagen(base64Image) {
-   var img = $('<img>').attr('src', 'data:image/png;base64,' + base64Image).css('width', '300px');
-
-    var contenedorImagen = document.createElement("div");
-    contenedorImagen.id = "contenedorImagen";
-    contenedorImagen.style.position = "fixed";
-    contenedorImagen.style.top = "0";
-    contenedorImagen.style.left = "0";
-    contenedorImagen.style.width = "100vw";
-    contenedorImagen.style.height = "100vh";
-    contenedorImagen.style.display = "flex";
-    contenedorImagen.style.justifyContent = "center";
-    contenedorImagen.style.alignItems = "center";
-    contenedorImagen.style.backgroundColor = "rgba(0,0,0,0.5)";
-    /*
-    var imagen = document.createElement("img");
-    imagen.src = src;
-    imagen.style.maxWidth = "80%";
-    imagen.style.maxHeight = "80%";
-    imagen.style.margin = "auto";
-    */
-    // como imagene s un elemento jquery se debe acceder el primner elemento
-    var imgElement = img.get(0);
-
-    contenedorImagen.appendChild(imgElement);
-
-    contenedorImagen.onclick = function() {
-        document.body.removeChild(contenedorImagen);
-    };
-
-    document.body.appendChild(contenedorImagen);
-}
-
-
 
 
 /* AJAX Evento de manejo de botones para paginacion
 *
 * */
 document.getElementById("inicioPagina").addEventListener("click", function() {
-        getCategorias(url_get_categorias,1,'inicio',filtroBusqueda);
+        getAreas(url_get_areas,1,'inicio',filtroBusqueda);
         paginaActual=1;
         NumPag.value=paginaActual;
     });
@@ -231,7 +175,7 @@ document.getElementById("anteriorPagina").addEventListener("click", function() {
                 paginaActual = 1;
             }
             NumPag.value=paginaActual;
-            getCategorias(url_get_categorias,paginaActual,'paginando',filtroBusqueda);
+            getAreas(url_get_areas,paginaActual,'paginando',filtroBusqueda);
     });
 
 document.getElementById("siguientePagina").addEventListener("click", function() {
@@ -241,11 +185,11 @@ document.getElementById("siguientePagina").addEventListener("click", function() 
                 paginaActual = totalPaginas;
             }
             NumPag.value=paginaActual;
-            getCategorias(url_get_categorias,paginaActual,'paginando',filtroBusqueda);
+            getAreas(url_get_areas,paginaActual,'paginando',filtroBusqueda);
     });
 
 document.getElementById("ultimaPagina").addEventListener("click", function() {
-            getCategorias(url_get_categorias,totalPaginas,'paginando',filtroBusqueda);
+            getAreas(url_get_areas,totalPaginas,'paginando',filtroBusqueda);
             paginaActual=totalPaginas;
             NumPag.value=paginaActual;
     });
@@ -275,7 +219,7 @@ function limpiarFormulario() {
        document.getElementById("imagenCategoria").value = ''; // Limpia el input del archivo
        document.getElementById("vistaPreviaImagen").src = ''; // Opcional: Limpia la vista previa de la imagen
        $('#campoBusqueda').val("");
-       getCategorias(url_get_categorias,1,'inicio','SINFILTROBUSQUEDA');
+       getAreas(url_get_areas,1,'inicio','SINFILTROBUSQUEDA');
 
 }
 

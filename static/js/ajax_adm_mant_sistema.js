@@ -18,7 +18,7 @@ function getMenus(){
          $('.navbar-nav').html(menuItems);
          // Agregar el estilo CSS para el hover
         $('.nav-link').hover(function() {
-            $(this).css('background-color', 'rgba(255, 165, 0, 0.6)'); // Cambiar el fondo a naranja cuando el mouse está sobre el enlace
+            $(this).css('background-color', 'rgba(0, 191, 255, 0.6)'); // Cambiar el fondo a naranja cuando el mouse está sobre el enlace
         }, function() {
             $(this).css('background-color', ''); // Restaurar el color de fondo original cuando el mouse sale del enlace
         });
