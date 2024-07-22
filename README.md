@@ -108,7 +108,6 @@ Ejecuctar el comando ( es necesario que el puerto 8000 este disponible )
             http://localhost:8000/
             credenciales megamediaAdmin / 5tgbnhy6
 
-	
    - Para entrar con usuario de contactos  ( perfil limitado )
 
             credenciales: contactoGSP / 6yhnmju7
