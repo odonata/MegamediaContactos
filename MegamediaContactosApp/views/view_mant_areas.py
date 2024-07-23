@@ -9,6 +9,8 @@ from django.views.decorators.csrf import csrf_exempt
 from MegamediaContactosApp.views.view_constantes import Constantes
 from MegamediaContactosApp.views.view_mant_sistema import UsuarioGrupos
 import requests
+from django.conf import settings
+
 
 
 #VISTA PARA EL MANTENEDOR de AREAS DE NEGOCIO
@@ -23,9 +25,9 @@ def get_areas(request):
     # Obtener el número de página desde los parámetros de la solicitud
     numero_pagina = request.query_params.get('page', 1)
     campoBusqueda = request.query_params.get('campoBusqueda', 1)
-    numeroRegistrosPagina = 9
+    numeroRegistrosPagina = settings.REGISTROS_POR_PAGINACION_AREA
 
-    url = "http://localhost:8080/areas"
+    url = f'http://{settings.HOST_REST_API_URL}:{settings.HOST_REST_API_PORT}/areas'
     params = {
         "busqueda": campoBusqueda,
         "pagina": numero_pagina,
@@ -66,7 +68,7 @@ def set_area(request):
                 nombre_categoria = request.POST.get('nombre_area')
 
                 # URL del endpoint REST
-                url = 'http://localhost:8080/areas'
+                url = f'http://{settings.HOST_REST_API_URL}:{settings.HOST_REST_API_PORT}/areas'
 
                 # Datos que quieres enviar en la solicitud POST
                 data = {
@@ -105,7 +107,7 @@ def del_area(request, id_area):
     usuariosGrupos = UsuarioGrupos(request)
     if usuariosGrupos.is_superuser():
         try:
-            url = f'http://localhost:8080/areas/{id_area}'
+            url = f'http://{settings.HOST_REST_API_URL}:{settings.HOST_REST_API_PORT}/areas/{id_area}'
             response = requests.delete(url)
             if response.status_code == 200:
                 data = response.json()

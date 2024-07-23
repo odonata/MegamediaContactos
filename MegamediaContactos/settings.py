@@ -140,3 +140,9 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATICFILES_STORAGE = 'whitenoise.storage.StaticFilesStorage'
 
+# Variables globales
+
+HOST_REST_API_URL   = 'localhost'
+HOST_REST_API_PORT = 8080
+REGISTROS_POR_PAGINACION_AREA = 10
+REGISTROS_POR_PAGINACION_CLIENTE = 10

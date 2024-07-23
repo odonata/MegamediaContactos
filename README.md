@@ -93,11 +93,11 @@ aplicativo MegamediaContactos.
 
 6. Correr el proyecto 
 
-Dentro del a,biente virtual:
+Dentro del ambiente virtual:
 
  	(.venv)  ..<path>/MegamediaContactos
 
-Ejecuctar el comando ( es necesario que el puerto 8000 este disponible )
+Ejecutar el comando ( es necesario que el puerto 8000 este disponible )
 
 	python manage.py runserver 0.0.0.0:8000  , o el puerto que este disponible y se desee utilizar
 

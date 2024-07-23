@@ -1,16 +1,15 @@
 import requests
 from datetime import datetime
 from django.db import  connection
-from django.db.models import F, Q
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from rest_framework.decorators import api_view
 from django.views.decorators.csrf import csrf_exempt
 
 from MegamediaContactosApp.views.view_constantes import Constantes
 from MegamediaContactosApp.views.view_mant_areas import UsuarioGrupos
+from django.conf import settings
 
 
 
@@ -26,7 +25,7 @@ def mant_clientes(request):
 def get_areas_registradas(request):
 
     # URL del endpoint
-    url = "http://localhost:8080/areasList"
+    url = f'http://{settings.HOST_REST_API_URL}:{settings.HOST_REST_API_PORT}/areasList'
     # Realizar la solicitud GET
     response = requests.get(url)
 
@@ -55,11 +54,10 @@ def get_clientes_area(request):
     # Obtener el número de página desde los parámetros de la solicitud
     numero_pagina = request.query_params.get('page', 1)
     campoBusqueda = request.query_params.get('campoBusqueda', 1)
-    numeroRegistrosPagina = 9
-    registros_por_pagina = 10
+    registros_por_pagina = settings.REGISTROS_POR_PAGINACION_CLIENTE
 
     # url de consulta y parametros
-    url = 'http://localhost:8080/clientes'
+    url = f'http://{settings.HOST_REST_API_URL}:{settings.HOST_REST_API_PORT}/clientes'
     params = {
         'busqueda': campoBusqueda,
         'pagina': numero_pagina,
