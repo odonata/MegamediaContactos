@@ -3,7 +3,7 @@ VIEW: view_mant_sistema.py
 Funcionalidad: Cargar los Menus para acceder a los mantenedores
 de area y clientes.
 
-Controller asociado: ajax_adm_mant_sistema.js
+Controller asociado: ajax_mant_sistema.js
 """
 
 from datetime import date

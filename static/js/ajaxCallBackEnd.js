@@ -19,22 +19,22 @@ function getProductos(par_idCategoria) {
                 // Verifica si el producto actual está en sessionStorage y obtiene su cantidad
                 const productoId = `${producto.id_producto}_PRODUCTO`;
                 const cantidadProducto = productosSeleccionados[productoId] ? productosSeleccionados[productoId].cantidad : 0;
-                const valorFormateado = formateaMonedaValor(producto.valor_unitario);
+                const valorFormateado = formateaMonedaValor(producto.email_contacto);
                 const textbase64 = obtener_imagen_base64(producto.path_imagen, 'productos');
                 const div = `
                     <div class="producto">
                         <div class="grid-item" style="background-image: url(data:image/png;base64,${textbase64});"></div>
                         <div class="acciones">
-                            <button onclick="quitarCantidad(${producto.id_producto},${producto.valor_unitario},'${producto.tipo_prod_promo}')">
+                            <button onclick="quitarCantidad(${producto.id_producto},${producto.email_contacto},'${producto.tipo_prod_promo}')">
                                 <img src="/static/imgs/img-corporativo/icono-memos.png" alt="Quitar" style="width: 30px;">
                             </button>
                             <span id="unitario-unidad-${producto.id_producto}" class="contador">${valorFormateado} - </span>
                             <span id="unidad-${producto.id_producto}" class="contador">${cantidadProducto}</span>
-                            <button onclick="agregarCantidad(${producto.id_producto},${producto.valor_unitario},'${producto.tipo_prod_promo}','${producto.descripcion}','${textbase64}')">
+                            <button onclick="agregarCantidad(${producto.id_producto},${producto.email_contacto},'${producto.tipo_prod_promo}','${producto.nombre_cliente}','${textbase64}')">
                                 <img src="/static/imgs/img-corporativo/icono-mas.png" alt="Añadir" style="width: 30px;">
                             </button>
                         </div>
-                        <h5 class="producto-descripcion">${producto.descripcion}</h5>
+                        <h5 class="producto-nombre_cliente">${producto.nombre_cliente}</h5>
                     </div>
                 `;
                 contenedorProductos.append(div);

@@ -6,47 +6,24 @@ warn_id.addEventListener('mouseover', (event) => {
   event.target.style.pointerEvents = 'none';
 });
 
-//document.addEventListener("DOMContentLoaded", function() {
-    // Añade un escuchador para el cambio en el input de tipo archivo
-    document.getElementById("path_imagen_producto").addEventListener("change", function(event) {
-        var reader = new FileReader();
-        reader.onload = function(){
-            var output = document.getElementById('vistaPreviaImagenProducto');
-            output.src = reader.result;
-            // Asegúrate de tener un elemento img con id="vistaPreviaImagen" en tu HTML donde se mostrará la vista previa
-        };
-        reader.readAsDataURL(event.target.files[0]);
-    });
-//});
+
 
 $(document).ready(function() {
-    getCategorias();
+    getAreas();
 
-    // Manejador de clics para las opciones del menú
-    $('.dropdown-content').on('click', 'a', function(e) {
-        e.preventDefault(); // Prevenir la acción por defecto de los enlaces
-        var idCategoria = $(this).data('id'); // Recuperar el id_categoria
-        var nombreCategoria = $(this).text(); // Recuperar el nombre de la categoría
-        var imagenSrc = $(this).find('img').attr('src'); // Recuperar el src de la imagen
 
-        // Actualizar el contenedor con el nombre y la imagen de la categoría seleccionada
-        $('#categoriaSeleccionada').html('<label id="nombreCategoria"> ' + nombreCategoria + '</label>&emsp;  <img id="vistaPreviaCategoria" src="' + imagenSrc + '" style="max-width: 100px; max-height: 100px;">');
-
-        // Aquí puedes realizar acciones adicionales con el idCategoria, como asignarlo a un input oculto en un formulario
-        document.getElementById('categoria').value=idCategoria;
-    });
 });
 
 
 // llamar a guardar  el nuevo producto
 function set_producto(tipoOperacion) {
     // Validaciones
-    const descripcion = $('#descripcion').val();
-    const valorUnitario = $('#valor_unitario').val();
+    const nombre_cliente = $('#nombre_cliente').val();
+    const valorUnitario = $('#email_contacto').val();
     const imagenProducto = $('#path_imagen_producto')[0].files[0];
     const categoria = $('#categoria').val();
 
-    if (!descripcion) {
+    if (!nombre_cliente) {
         Swal.fire('Error', 'Debe agregar una descripción.', 'error');
         return;
     }
@@ -67,9 +44,9 @@ function set_producto(tipoOperacion) {
 
     // Preparar datos para el envío
     let formData = new FormData();
-    formData.append('descripcion', descripcion);
+    formData.append('nombre_cliente', nombre_cliente);
     formData.append('habilitado', $('#habilitado').is(':checked'));
-    formData.append('valor_unitario', valorUnitario);
+    formData.append('email_contacto', valorUnitario);
     formData.append('imagenProducto', imagenProducto);
     formData.append('categoria', categoria);
     formData.append('tipo_prod_promo', 'PRODUCTO');
@@ -93,8 +70,8 @@ function set_producto(tipoOperacion) {
                 Swal.fire('¡Éxito!', response.mensaje, 'success').then(() => {
                     // Limpiar formulario
                     /*
-                    $('#descripcion').val('');
-                    $('#valor_unitario').val('');
+                    $('#nombre_cliente').val('');
+                    $('#email_contacto').val('');
                     $('#path_imagen_producto').val('');
                     $('#categoria').val('');
                     $('#habilitado').prop('checked', false);
@@ -102,7 +79,7 @@ function set_producto(tipoOperacion) {
                     document.getElementById("vistaPreviaCategoria").src = '';
                     $('#categoriaSeleccionada').empty();
                     */
-                    // getProductosCategorias(url_get_productos,1,'inicio',filtroBusqueda,'NORMAL');
+                    // getClientesArea(url_get_clientes,1,'inicio',filtroBusqueda,'NORMAL');
                     set_cancelar();
                 });
             } else {
@@ -124,15 +101,15 @@ function handleKeyPress(event) {
 
 function buscarProductos(){
     filtroBusqueda='FILTRO';
-    getProductosCategorias(url_get_productos,1,'inicio',filtroBusqueda,'NORMAL');
+    getClientesArea(url_get_clientes,1,'inicio',filtroBusqueda,'NORMAL');
 
 }
 
-/* AJAX getProductosCategorias
+/* AJAX getClientesArea
 *  Trae todas los productos
 *  llamando a la vista : get_productos  de forma paginada
 * */
-function getProductosCategorias(pUrl,pagina,tipoCargaPagina,filtroBusquedatxt , tipoBusqueda) {
+function getClientesArea(pUrl,pagina,tipoCargaPagina,filtroBusquedatxt , tipoBusqueda) {
     var PagTot          = document.getElementById('PaginasTotales');
     var NumPag          = document.getElementById('numeroPagina');
     var campoBusqueda          = document.getElementById('campoBusqueda').value;
@@ -159,53 +136,31 @@ function getProductosCategorias(pUrl,pagina,tipoCargaPagina,filtroBusquedatxt , 
             tabla.empty(); // Limpiar la tabla antes de agregar nuevos datos
 
             $.each(results, function (index, resp) {
-                // recuperar la imagen de categoria
-                 $.ajax({
-                    url: '/vista_de_imagen/categorias/' + resp.imagen_categoria, // Usa el nombre de la imagen como parámetro
-                    async: false, // Hacer la llamada AJAX síncrona
-                    success: function(base64Image_categoria) {
-                        // Construir el elemento <img> en el HTML con la imagen en base64
-                        imgElementCategoria = $('<img>').attr('src', 'data:image/png;base64,' + base64Image_categoria).css('width', '100px');
-                    }
-                });
-                // recuperar la imagen de producto
-                 $.ajax({
-                    url: '/vista_de_imagen/productos/' + resp.path_imagen, // Usa el nombre de la imagen como parámetro
-                    success: function(base64Image_producto) {
-                        // Construir el elemento <img> en el HTML con la imagen en base64
-                        imgElementProducto = $('<img>').attr('src', 'data:image/png;base64,' + base64Image_producto).css('width', '100px');
-                        var habilitadoTexto = resp.habilitado ? 'Habilitado' : 'No Habilitado';
-                        var fila = `<tr>
-                            <td style="text-align: center;">${resp.descripcion}</td>
-                            <td style="text-align: center;">${habilitadoTexto}</td>
-                            <td style="text-align: center;">${imgElementProducto.prop('outerHTML')}</td>
-                            <td style="text-align: center;">${imgElementCategoria.prop('outerHTML')}</td>
-                            <td style="text-align: center;">${resp.valor_unitario}</td>
-                            <td style="text-align: center;">${resp.descripcion}</td>
-                            <td style="text-align: center;">${resp.nombre_categoria}</td>
-                            <td style="text-align: center;"><button class="btn btn-outline-warning" onclick="modificarProducto(${resp.id_producto},'${resp.descripcion}',${resp.habilitado},${resp.valor_unitario},${resp.id_categoria},'${base64Image_producto}')">Modificar</button></td>
-                            <td style="text-align: center;"><button class="btn btn-outline-danger" onclick="eliminarProducto(${resp.id_producto},'${resp.descripcion}')">Eliminar</button></td>
-                        </tr>`;
-                        tabla.append(fila);
-                    }
-                });
-
+                var fila = `<tr>
+                <td style="text-align: center;">${resp.nombre_cliente}</td>
+                <td style="text-align: center;">${resp.nombre_area}</td>
+                <td style="text-align: center;">${resp.email_contacto}</td>
+                <td style="text-align: center;">${resp.fono_contacto}</td>
+                <td style="text-align: center;"><button class="btn btn-outline-warning" onclick="modificarCliente(${resp.cliente_id},'${resp.nombre_cliente}','${resp.email_contacto}',${resp.area_id},'${resp.fono_contacto}','${resp.email_contacto}')">Modificar</button></td>
+                <td style="text-align: center;"><button class="btn btn-outline-danger" onclick="eliminarCliente(${resp.cliente_id},'${resp.nombre_cliente}')">Eliminar</button></td>
+                </tr>`;
+                tabla.append(fila);
             });
         }
     });
 }
 
 
-function modificarProducto(id_producto, descripcion , habilitado , valor_unitario , id_categoria , base64Image_producto  ){
-    getProductosCategorias(url_get_productos,1,'inicio',id_producto,'MODIFICACION');
+function modificarCliente(id_producto, nombre_cliente , habilitado , email_contacto , id_categoria , base64Image_producto  ){
+    getClientesArea(url_get_clientes,1,'inicio',id_producto,'MODIFICACION');
      $('#botonGuardar').prop('disabled', true);
      $('#campoBusqueda').prop('disabled', true);
      $('#botonModificar').show();
      $('#botonCancelar').show();
      $('#botonLimpiar').hide();
-     $('#descripcion').val(descripcion);
+     $('#nombre_cliente').val(nombre_cliente);
      $('#habilitado').prop('checked', habilitado);
-     $('#valor_unitario').val(valor_unitario);
+     $('#email_contacto').val(email_contacto);
      $('#categoria_'+id_categoria).click();
      var base64Image = "data:image/png;base64," + base64Image_producto;
      $('#vistaPreviaImagenProducto').attr('src', base64Image);
@@ -220,26 +175,26 @@ function set_cancelar(){
     $('#botonCancelar').hide();
     $('#botonLimpiar').show();
     $('#campoBusqueda').prop('disabled', false);
-    $('#descripcion').val("");
+    $('#nombre_cliente').val("");
     $('#habilitado').prop('checked', true);
-    $('#valor_unitario').val("");
+    $('#email_contacto').val("");
     $('#campoBusqueda').val("");
     document.getElementById("vistaPreviaImagenProducto").src = '';
     $('#categoriaSeleccionada').empty();
     glb_idProducto=0;
-    getProductosCategorias(url_get_productos,1,'inicio','SINFILTROBUSQUEDA','NORMAL');
+    getClientesArea(url_get_clientes,1,'inicio','SINFILTROBUSQUEDA','NORMAL');
 }
 
-function getCategorias() {
+function getAreas() {
     $.ajax({
-        url: '/get_categorias_registradas/',
+        url: '/get_areas_registradas/',
         dataType: 'json',
         success: function (data) {
-            var lista = $('.dropdown-content');
+            var lista = $('#lista-areas');
             lista.empty();
             $.each(data, function (index, reg) {
-                var option = $('<a id="categoria_'+reg.id_categoria+'" href="#" data-id="' + reg.id_categoria + '">').html('<img src="/static/imagenes/categorias/' + reg.imagen + '" style="height:20px;"> ' + reg.nombre_categoria);
-                lista.append(option);
+                console.log(reg.id_area);
+                lista.append('<option value="' + reg.id + '">' + reg.nombre + '</option>');
             });
         }
     });
@@ -282,7 +237,7 @@ function verImagen(src) {
 *
 * */
 document.getElementById("inicioPagina").addEventListener("click", function() {
-        getProductosCategorias(url_get_productos,1,'inicio',filtroBusqueda,'NORMAL');
+        getClientesArea(url_get_clientes,1,'inicio',filtroBusqueda,'NORMAL');
         paginaActual=1;
         NumPag.value=paginaActual;
     });
@@ -294,12 +249,12 @@ document.getElementById("anteriorPagina").addEventListener("click", function() {
                 paginaActual = 1;
             }
             NumPag.value=paginaActual;
-            getProductosCategorias(url_get_productos,paginaActual,'paginando',filtroBusqueda,'NORMAL');
+            getClientesArea(url_get_clientes,paginaActual,'paginando',filtroBusqueda,'NORMAL');
     });
 
-function eliminarProducto(id_producto, descripcion) {
+function eliminarCliente(id_producto, nombre_cliente) {
     var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-    titulo = `¿Eliminar Producto \n ${descripcion} , estás seguro?`;
+    titulo = `¿Eliminar Producto \n ${nombre_cliente} , estás seguro?`;
     Swal.fire({
       title: titulo,
       text: "No podrá revertir esto.",
@@ -344,11 +299,11 @@ document.getElementById("siguientePagina").addEventListener("click", function() 
                 paginaActual = totalPaginas;
             }
             NumPag.value=paginaActual;
-            getProductosCategorias(url_get_productos,paginaActual,'paginando',filtroBusqueda,'NORMAL');
+            getClientesArea(url_get_clientes,paginaActual,'paginando',filtroBusqueda,'NORMAL');
     });
 
 document.getElementById("ultimaPagina").addEventListener("click", function() {
-            getProductosCategorias(url_get_productos,paginaActual,'paginando',filtroBusqueda,'NORMAL');
+            getClientesArea(url_get_clientes,paginaActual,'paginando',filtroBusqueda,'NORMAL');
             paginaActual=totalPaginas;
             NumPag.value=paginaActual;
     });
@@ -371,12 +326,12 @@ function limpiarFormulario() {
        document.getElementById("categoria").value = ''; // Limpia el input de nombre de categoría
        document.getElementById("imagenCategoria").value = ''; // Limpia el input del archivo
        document.getElementById("vistaPreviaImagen").src = ''; // Opcional: Limpia la vista previa de la imagen
-       getProductosCategorias(url_get_productos,paginaActual,'paginando',filtroBusqueda,'NORMAL');
+       getClientesArea(url_get_clientes,paginaActual,'paginando',filtroBusqueda,'NORMAL');
 
 }
 
 function salir(){
-    window.top.location.href = '/mant_sistema';
+    window.top.location.href = '/';
 
 }
 

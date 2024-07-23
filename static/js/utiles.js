@@ -52,7 +52,7 @@ function actualizarCantidadYTotalDesdeSesion(totalesSeleccionados, paginaActual)
     // Puedes añadir más lógica aquí para manejar distintas páginas (productos vs promociones)
 }
 
-function agregarCantidad(id,valor, tipo,descripcion,imgCache) {
+function agregarCantidad(id,valor, tipo,nombre_cliente,imgCache) {
     // Obtener valores actuales de sessionStorage o usar valores por defecto
     let pcantidadProductos = parseInt(sessionStorage.getItem('CP')) || 0;
     cantidadProductos = pcantidadProductos;
@@ -80,7 +80,7 @@ function agregarCantidad(id,valor, tipo,descripcion,imgCache) {
 
     // el codigo para almacenarse en la session es el id de producto o promo + el tipo (promo + producto)
     codigo = id+"_"+tipo;
-    objSesion[codigo] = { cantidad: unidadActual, precio: valor, descripcion: descripcion, imgCache: imgCache };
+    objSesion[codigo] = { cantidad: unidadActual, precio: valor, nombre_cliente: nombre_cliente, imgCache: imgCache };
     objSesionTotales[tipo] = {cProductos: cantidadProductos , tProductos: totalProductos};
     objSesionPaginaActual = {pActual : tipo};
     sessionStorage.setItem('productosSeleccionados', JSON.stringify(objSesion));
@@ -219,7 +219,7 @@ function llenarTablaProductos() {
                 // Crear un contenedor div para la imagen y la descripción
                 var divDetalle = document.createElement('div');
                 divDetalle.appendChild(img);
-                divDetalle.appendChild(document.createTextNode(' ' + producto.descripcion));
+                divDetalle.appendChild(document.createTextNode(' ' + producto.nombre_cliente));
 
                 // Agregar el contenedor a la celdaDetalle
                 celdaDetalle.appendChild(divDetalle);

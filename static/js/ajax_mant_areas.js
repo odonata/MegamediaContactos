@@ -5,33 +5,29 @@ warn_id.addEventListener('mouseover', (event) => {
   event.target.style.pointerEvents = 'none';
 });
 
-function validarYGuardarCategoria() {
-    var nombreCategoria = document.getElementById("categoria").value;
-    var imagenCategoria = document.getElementById("imagenCategoria").files[0];
+function validarYGuardar() {
+    var nombre = document.getElementById("categoria").value;
 
-    if (!nombreCategoria || !imagenCategoria) {
+    if (!nombre ) {
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
-          text: 'Por favor, indica un nombre y selecciona una imagen para la categoría.'
+          text: 'Por favor, indica un nombre de área '
         });
         return false; // Detiene la ejecución adicional
     }
 
     // Si todo está correcto, llama a la función que realiza la solicitud de guardado
-    guardarCategoria();
+    guardarArea();
 }
 
-function guardarCategoria() {
+function guardarArea() {
     var formData = new FormData();
-    var nombreCategoria = document.getElementById("categoria").value;
-    var imagenCategoria = document.getElementById("imagenCategoria").files[0];
+    var nombreArea = document.getElementById("categoria").value;
 
-    formData.append('nombre_categoria', nombreCategoria);
-    formData.append('imagen', imagenCategoria);
+    formData.append('nombre_area', nombreArea);
 
-    // Asegúrate de actualizar la URL a la que apuntas en tu aplicación
-    var url = '/set_categoria/'; // Cambia esto por la URL correcta de tu vista
+    var url = '/set_area/';
 
     fetch(url, {
         method: 'POST',
@@ -39,7 +35,8 @@ function guardarCategoria() {
     })
     .then(response => response.json())
     .then(data => {
-        if (data.resultado==='Éxito'){
+        if (data.resultado==='Exito'){
+            Swal.fire('Exito', data.mensaje, 'Exito');
             getAreas(url_get_areas,1,'inicio',filtroBusqueda);
             limpiarFormulario();
         }else{
@@ -134,7 +131,7 @@ function eliminarArea(idArea , nomCategoria) {
                     'X-CSRFToken': csrfToken
                 },
                 success: function(response) {
-                    if (response.resultado === 'Éxito') {
+                    if (response.resultado === 'Exito') {
                          Swal.fire('¡Éxito!', response.mensaje, 'success').then(() => {
                             // Limpiar y Recargar la lista de categorías
                             limpiarFormulario();
@@ -216,8 +213,7 @@ function limpiarFormulario() {
        totalPaginas               = 0;
        seleccionadoActual         = 0;
        document.getElementById("categoria").value = ''; // Limpia el input de nombre de categoría
-       document.getElementById("imagenCategoria").value = ''; // Limpia el input del archivo
-       document.getElementById("vistaPreviaImagen").src = ''; // Opcional: Limpia la vista previa de la imagen
+
        $('#campoBusqueda').val("");
        getAreas(url_get_areas,1,'inicio','SINFILTROBUSQUEDA');
 
@@ -225,31 +221,13 @@ function limpiarFormulario() {
 
 
 function salir(){
-window.top.location.href = '/mant_sistema';
+window.top.location.href = '/';
 
 }
 
 
 
-/* Javascript para manejo de mensajes ventana modal*/
 
-function openModal(type,mensaje) {
-    var modal = document.getElementById('modalResultado');
-    var estadoResultado = document.getElementById('estadoResultado_id');
-    var estadoResultadoMensaje = document.getElementById('estadoResultadoMensaje_id');
-    estadoResultado.value = type;
-    estadoResultadoMensaje.value= mensaje;
-    modal.show();
-}
-
-function openModalCamposError(camposError){
-    var modal = document.getElementById('modalResultado');
-    var estadoResultado = document.getElementById('estadoResultado_id'); ;
-    var estadoResultadoMensaje = document.getElementById('estadoResultadoMensaje_id');
-    estadoResultado.value = "Error";
-    estadoResultadoMensaje.value= camposError;
-    modal.show();
-}
 
 function closeModal() {
     var modal = document.getElementById('modalResultado');

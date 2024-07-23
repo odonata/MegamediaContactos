@@ -20,7 +20,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth import views as auth_views
 
-from MegamediaContactosApp.views.view_mant_areas import get_areas, mant_areas, del_area
+from MegamediaContactosApp.views.view_mant_areas import get_areas, mant_areas, del_area, set_area
+from MegamediaContactosApp.views.view_mant_clientes import get_areas_registradas, mant_clientes, get_clientes_area, \
+    set_cliente, upd_cliente, del_cliente
 from MegamediaContactosApp.views.view_mant_sistema import home, obtener_menus, pagina_noencontrada
 
 urlpatterns = [
@@ -32,6 +34,13 @@ urlpatterns = [
     path('get_areas/',get_areas,name='get_areas'),
     path('mant_areas/',mant_areas,name='mant_areas'),
     path('del_area/<int:id_area>',del_area,name='del_area'),
+    path('set_area/',set_area,name='set_area'),
+    path('get_areas_registradas/',get_areas_registradas, name="get_areas_registradas"),
+    path('mant_clientes/',mant_clientes,name='mant_clientes'),
+    path('get_clientes_area/',get_clientes_area,name='get_clientes_area'),
+    path('set_cliente/',set_cliente,name='set_cliente'),
+    path('upd_cliente/',upd_cliente,name='upd_cliente'),
+    path('del_cliente/<int:id_cliente>',del_cliente,name='del_cliente'),
     path('<str:not_found>/', pagina_noencontrada),
     # no agregar nada despues de esta linea, todos los nuevos urls debes
     # estar antes de str:not_found

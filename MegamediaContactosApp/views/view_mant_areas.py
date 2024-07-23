@@ -56,30 +56,34 @@ def get_areas(request):
 # ----------------------------------------------------------------------------
 
 @csrf_exempt
-def set_categoria(request):
+def set_area(request):
     salida=''
     tipoSalida=''
     usuariosGrupos = UsuarioGrupos(request)
     if usuariosGrupos.is_superuser():
         if request.method == 'POST':
             try:
-                nombre_categoria = request.POST.get('nombre_categoria')
-                imagen = request.FILES.get('imagen')
+                nombre_categoria = request.POST.get('nombre_area')
 
-                # Construye el path donde se guardará la imagen
-                file_path = '/opt/apps/kioskopay/imagenes/categorias/' + imagen.name
+                # URL del endpoint REST
+                url = 'http://localhost:8080/areas'
 
-                # Guarda el archivo en el sistema de archivos
-                with open(file_path, 'wb+') as destination:
-                    for chunk in imagen.chunks():
-                        destination.write(chunk)
+                # Datos que quieres enviar en la solicitud POST
+                data = {
+                    'nombre': nombre_categoria,
+                    'usuario': request.user.username
+                }
 
-                # Crea una nueva instancia de Categorias con el nombre del archivo
-                categoria = Categorias(nombre_categoria=nombre_categoria, imagen=imagen.name)
-                categoria.save()
-                salida = Constantes.OK_Registro_agregado
-                tipoSalida = Constantes.TipoSalida_exito
-                limpiar_cache_imagenes()
+                # Hacer la solicitud POST
+                response = requests.post(url, params=data)
+
+                # Verificar el estado de la respuesta
+                if response.status_code == 200:
+                    salida = Constantes.OK_Registro_agregado
+                    tipoSalida = Constantes.TipoSalida_exito
+                else:
+                    salida = Constantes.Error_registro_agregado
+                    tipoSalida = Constantes.TipoSalida_error
             except:
                 salida = Constantes.Error_registro_agregado
                 tipoSalida = Constantes.TipoSalida_error

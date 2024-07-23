@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=0.5">
     <meta name="csrf-token" content="{{ csrf_token }}">
-    <title>{% block title %}Mantenedor de Categorías{% endblock %}</title>
+    <title>{% block title %}Mantenedor de Productos{% endblock %}</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'bootstrap5/css/bootstrap.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'sweetalert2/sweetalert2.min.css' %}">
@@ -23,15 +23,21 @@
     </dialog>
     <div id="ct" class="container-fluid" style="width: 100%;" >
             <div>
-                <div id="textoDiv">MANTENEDOR DE ÀREAS DE NEGOCIO</div>
+                <div id="textoDiv">MANTENEDOR DE CLIENTES</div>
             </div>
          <table>
                 <tr>
                     <td colspan="1">
-                         <button id="botonGuardar" onclick="validarYGuardar()" class="btn btn-outline-primary btn-lg" >
+                         <button id="botonGuardar" onclick="set_producto('NUEVO')"  class="btn btn-outline-primary btn-lg" >
                             Guardar
                         </button>
-                        <button id="botonLimpiar" onclick="limpiarFormulario()"  class="btn btn-outline-primary btn-lg" >
+                         <button id="botonModificar" onclick="set_producto('MODIFICAION')"  class="btn btn-outline-warning btn-lg" style="display: none;">
+                            Modificar
+                        </button>
+                         <button id="botonCancelar" onclick="set_cancelar()"  class="btn btn-outline-warning btn-lg" style="display: none;">
+                            Canecelar
+                        </button>
+                        <button id="botonLimpiar" onclick="set_cancelar()"  class="btn btn-outline-primary btn-lg" >
                             Limpiar
                         </button>
                         <button id="botonSalir" onclick="salir()"  class="btn btn-outline-primary btn-lg" >
@@ -49,13 +55,24 @@
                 <tr>
                     <td colspan="2" >
                         <fieldset class="border p-3">
-                            <legend style="margin-bottom: 0;">Datos del Área de Negocios</legend>
-                            <table id="datosCategoria" style="border-collapse: separate; border-spacing: 20px;">
+                            <legend style="margin-bottom: 0;">Datos del Cliente</legend>
+                            <table id="datosProducto" style="border-collapse: separate; border-spacing: 20px;">
 
                                  <tr>
-                                    <td><label for="nombre">* Nombre área de Negocio: </label></td>
-                                    <td><input type="text" id="categoria" maxlength="100" size="50" class="form-control"></td>
+                                    <td><label for="path_imagen">Seleccione Área</label></td>
+                                    <td>
+                                           <select id="lista-areas">
+                                                <!-- Opciones cargadas dinámicamente -->
+                                           </select>
+                                    </td>
+                                    <td><label for="nombre_cliente">* Nombre Cliente: </label></td>
+                                    <td><input type="text" id="nombre_cliente" maxlength="50" size="30" class="form-control"></td>
 
+                                    <td><label for="email_contacto">* Email: </label></td>
+                                    <td><input type="text" id="email_contacto" maxlength="30" size="40" class="form-control"></td>
+
+                                    <td><label for="Fono">* Fono: </label></td>
+                                    <td><input type="text" id="fono" maxlength="30" size="27" class="form-control"></td>
                                 </tr>
 
                             </table>
@@ -63,21 +80,24 @@
                     </td>
                 </tr>
          </table>
+        <!-- huidden para el manejo de la categoria qu8e se asocia al producto que se esta creando-->
+        <input type="hidden" id="categoria">
     </div>
         <p></p>
      <div id="ct" class="container-fluid" style="width: 100%;" >
             <div>
-                <div id="textoDiv">Áreas Registradas - buscar: <input type="text" id="campoBusqueda" onkeyup="handleKeyPress(event)">
-</div>
+                <div id="textoDiv">Clientes Registrados - búsqueda : <input type="text" id="campoBusqueda" onkeyup="handleKeyPress(event)"></div>
             </div>
+
             <table id="items-table">
                 <thead>
                     <tr>
-                        <th data-width="70%">Nombre Area</th>
-                        <th data-width="20%">Creación</th>
-                        <th data-width="10%">Fecha Actualización</th>
-                        <th data-width="10%">Usuario Creacion / Modificación</th>
-                        <th data-width="10%">Acciones</th>
+                        <th data-width="70%">Nombre Cliente</th>
+                        <th data-width="10%">Nombre Area</th>
+                        <th data-width="10%">email</th>
+                        <th data-width="10%">Fono</th>
+                        <th data-width="10%">Modificar</th>
+                        <th data-width="10%">Eliminar</th>
                     </tr>
                 </thead>
                 <!-- Filas con datos del menú -->
@@ -97,16 +117,18 @@
         <button id="ultimaPagina" >&gt;&gt;</button>
     </div>
 
-    <script src="/static/js/ajax_mant_areas.js"></script>
+    <script src="/static/js/ajax_mant_clientes.js"></script>
 
     <script>
          var paginaActual                   = 1;
          var totalPaginas                   = 0;
          var seleccionadoActual             = 0;
-         var url_get_areas             = "{% url 'get_areas' %}";
+         var url_get_clientes             = "{% url 'get_clientes_area' %}";
          var filtroBusqueda                 = 'SINFILTROBUSQUEDA';
-
-         $(document).ready(function () {getAreas(url_get_areas,1,'inicio',filtroBusqueda);});
+         $(document).ready(function () {
+             getClientesArea(url_get_clientes,1,'inicio',filtroBusqueda , 'NORMAL');
+             getAreas();
+         });
 
 
     </script>
