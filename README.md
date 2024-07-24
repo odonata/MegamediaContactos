@@ -13,7 +13,6 @@ https://github.com/odonata/MegamediaContactosServiceAPI
 
 * leer el README_Requisitos_Base_de_Datos.md
 * leer el README_Requisitos_Java.md
-* Leer el README_Requisitos_Python.md
 
 ## Lenguajes / Frameworks Utilizados
 
@@ -100,6 +99,15 @@ Dentro del ambiente virtual:
 Ejecutar el comando ( es necesario que el puerto 8000 este disponible )
 
 	python manage.py runserver 0.0.0.0:8000  , o el puerto que este disponible y se desee utilizar
+
+Url para ver el aplicartivo : 
+
+    http://localhost:8000
+
+![Inicio](https://github.com/odonata/MegamediaContactos/blob/main/Artefactos/imagenes/EstructuraDB.png)
+
+
+
 
 7. Credenciales
 
