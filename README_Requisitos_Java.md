@@ -1,4 +1,4 @@
-# Pre requisitos de instalación Java
+# Pre requisitos de instalación Java, y detalles de los servicios desplegados
 
 JDK: Pre requisitos marco de ejecución Java 
 
@@ -68,8 +68,61 @@ Resultado de la compilación:
 
 ![Resultado](https://github.com/odonata/MegamediaContactos/blob/main/Artefactos/imagenes/resultado_compilacion_mvn.png)
 
-Correr el apirest java springboot
+Correr el apirest java springboot ( dentro de la carpeta target )
 
 	java -jar MegamediaContactos_service_v1.jar
 
+![Inicio](https://github.com/odonata/MegamediaContactos/blob/main/Artefactos/imagenes/InicioSpringBoot.png)
+
+Leer el log , entrar a la carpeta target :
+
+	tail -f MegaMediaContactosService.log
+
+![Log](https://github.com/odonata/MegamediaContactos/blob/main/Artefactos/imagenes/LogCapaServicios.png)
+
+Abrir en el navegador la web swagger del servicio.
+
+ir a : http://localhost:8080/swagger-ui.html#/mega-media-contactos-controller
+
+![Apirest](https://github.com/odonata/MegamediaContactos/blob/main/Artefactos/imagenes/SwaggerCapaServicios.png)
+
+# 4. Servicios desplegados
+
+Los siguientes son la lista de servicios desplegados quenutilkizan un apikey para ser accedidos, y estan 
+segmentados por delegación de responsabilidad.
+
+		APIKEY = test.megamedia.apikey.123
+
+* PUT : /areaActualizar/{area_id}/{nombre_area}/{usuario}
+
+		Actualizar el nombre del área de Negocio 
+
+* PUT : /clienteActualizar/{cliente_id}/{area_id}/{nombre_cliente}/{fono_contacto}/{email_contacto}/{usuario}
+
+		Actualizar los datos del cliente
+* GET : /areas
+
+		Obtener la lista de areas de negocio paginadas via pl en db
+* GET : /areasList
+
+		Obtener todas las areas de negocio
+* GET : /clientes
+
+		Obtener la lista de clientes paginados via pl en db
+* GET : /estadoDelClima
+
+		Obtiene el estado del Clima, entrega una imagen grqfica y datos bvase, es el único API del sistema que no ocupa 
+  		apikey propio. Llama al servicio wether open para obtener la data
+* POST : /areas
+
+		Crear un área de negocio
+* POST : /clienteCrear
+
+		Crear un Cliente
+* DELETE : /areas/{id}
+
+		Borrar un área
+* DELETE : /deleteCliente/{cliente_id}
+
+		Borrar un cliente
 
