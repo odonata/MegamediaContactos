@@ -49,7 +49,7 @@ Clientes por área de negocios:
   * Salud: Clínica Alemana, Red Salud, Bupa
   * Energía: Enel, Copec, Arauco
 
-por lo que SE modelÓ una base de datos de clientes que se basa en :
+  por lo que se modeló una base de datos de clientes que se basa en :
 
   * Áreas de Neogio —> Clientes por Área de Negocio
 
@@ -69,6 +69,12 @@ por lo que SE modelÓ una base de datos de clientes que se basa en :
    * Descripción: Almacena datos.
    * Nombre: MegamediosDB
    * Tecnología: PostgreSQL
+
+
+![Arquitectura](https://github.com/odonata/MegamediaContactos/blob/main/Artefactos/imagenes/InicioApp.png)
+
+
+
 
 2. Diagrama de Secuencia
 
