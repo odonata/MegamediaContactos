@@ -57,35 +57,37 @@ por lo que SE modelÓ una base de datos de clientes que se basa en :
 
 1. Diagrama de Arquitectura de Componentes
 
-
-	•	Front-End (Django)
-	•	Descripción: Sistema web para contactos.
-	•	Tecnología: Django (versión 4.2), Python 3.10
-	•	Comunicación: Envía solicitudes API REST con seguridad via API Key a la capa de servicios Java Spring Boot.
-	•	Capa de Servicios (Java Spring Boot)
-	•	Descripción: Procesa solicitudes API REST, maneja la lógica de negocio.
-	•	Tecnología: Java Spring Boot (versión 1.8)
-	•	Comunicación: Realiza consultas, actualizaciones, inserciones y eliminaciones en la base de datos PostgreSQL.
-	•	Base de Datos (PostgreSQL)
-	•	Descripción: Almacena datos.
-	•	Nombre: MegamediosDB
-	•	Tecnología: PostgreSQL
+   * Front-End (Django)
+   * Descripción: Sistema web para contactos.
+   * Tecnología: Django (versión 4.2), Python 3.10
+   * Comunicación: Envía solicitudes API REST con seguridad via API Key a la capa de servicios Java Spring Boot.
+   * Capa de Servicios (Java Spring Boot)
+   * Descripción: Procesa solicitudes API REST, maneja la lógica de negocio.
+   * Tecnología: Java Spring Boot (versión 1.8)
+   * Comunicación: Realiza consultas, actualizaciones, inserciones y eliminaciones en la base de datos PostgreSQL.
+   * Base de Datos (PostgreSQL)
+   * Descripción: Almacena datos.
+   * Nombre: MegamediosDB
+   * Tecnología: PostgreSQL
 
 2. Diagrama de Secuencia
 
 	1.	Front-End (Django)
    
-		•	Envía una solicitud (consulta, actualización, inserción o eliminación) a la Capa de Servicios (Java Spring Boot) con un API Key.
+       * Envía una solicitud (consulta, actualización, inserción o eliminación) a la Capa de Servicios (Java Spring Boot) con un API Key.
+   
 	2.	Capa de Servicios (Java Spring Boot)
    
-		•	Recibe la solicitud.
-		•	Procesa la solicitud según el tipo de operación.
-		•	Realiza la operación correspondiente en la Base de Datos (PostgreSQL).
+       * Recibe la solicitud.
+	    * Procesa la solicitud según el tipo de operación.
+	    * Realiza la operación correspondiente en la Base de Datos (PostgreSQL).
+   
 	3.	Base de Datos (PostgreSQL)
    
-		•	Ejecuta la operación solicitada (consulta, actualización, inserción o eliminación).
-		•	Devuelve el resultado a la Capa de Servicios (Java Spring Boot).
+       * Ejecuta la operación solicitada (consulta, actualización, inserción o eliminación).
+	    * Devuelve el resultado a la Capa de Servicios (Java Spring Boot).
+
 	4.	Capa de Servicios (Java Spring Boot)
    
-		•	Devuelve el resultado al Front-End (Django).
+       * Devuelve el resultado al Front-End (Django).
 
