@@ -65,7 +65,7 @@ Paso 1: Restaurar el Backupo Inicial
 
 Se asume que se tiene claridad como instalar el cliente 'Dbeaver' y configurar una conexion a la base datos recién creada.
 
-Con la base de datos en blanco yn el archivo : dump-MegamediaDB-202407240320_MegamediaContactos_JULIO2024.tar ya descargado
+Con la base de datos en blanco y el archivo ya descargado : dump-MegamediaDB-202407240320_MegamediaContactos_JULIO2024.tar ya descargado
 proceder a restaurar los objetos de la base de datos, para ello abrir el cliente , crear una nueva conexión a la base datos
 y proceder a restaurar el backup:
 
@@ -77,10 +77,12 @@ Paso a Paso:
 
 * Seleccionar herramientas > Restaurar Bakup
 
-![Restaurar Bakup](https://github.com/odonata/MegamediaContactos/blob/main/Artefactos/imagenes/herramientas_backup.png)
+![Restaurar Bakup](https://github.com/odonata/MegamediaContactos/blob/main/Artefactos/imagenes/Restaurar_backup.png)
 
-Esperar que termine la importacion al motor de datos y salir, se puede verificar entrando 
-al esquema publico y deberia ver la siguiente estrcutura:
+Esperar que termine la importación al motor de datos y salir, se puede verificar entrando 
+al esquema público y deberia ver la siguiente estructura:
 
+![Estructura de Objetos](https://github.com/odonata/MegamediaContactos/blob/main/Artefactos/imagenes/EstructuraDB.png)
 
+Eso es todo ya se puede proicedeer a la instalacion de la parte Java
 
