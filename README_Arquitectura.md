@@ -95,4 +95,4 @@ Clientes por área de negocios:
    
        * Devuelve el resultado al Front-End (Django).
 
-![Secuencia](https://github.com/odonata/MegamediaContactos/blob/main/Artefactos/imagenes/MegamediaContactos_ArquitecturaComponentes.png)
+![Secuencia](https://github.com/odonata/MegamediaContactos/blob/main/Artefactos/imagenes/Megamedia_Scuencia.png)
