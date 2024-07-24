@@ -96,3 +96,21 @@ Clientes por área de negocios:
        * Devuelve el resultado al Front-End (Django).
 
 ![Secuencia](https://github.com/odonata/MegamediaContactos/blob/main/Artefactos/imagenes/Megamedia_Scuencia.png)
+
+3. Front End
+
+![1](https://github.com/odonata/MegamediaContactos/blob/main/Artefactos/imagenes/Megamedia_Scuencia.png)
+![2](https://github.com/odonata/MegamediaContactos/blob/main/Artefactos/imagenes/Megamedia_Scuencia.png)
+![3](https://github.com/odonata/MegamediaContactos/blob/main/Artefactos/imagenes/Megamedia_Scuencia.png)
+![4](https://github.com/odonata/MegamediaContactos/blob/main/Artefactos/imagenes/Megamedia_Scuencia.png)
+![5](https://github.com/odonata/MegamediaContactos/blob/main/Artefactos/imagenes/Megamedia_Scuencia.png)
+![6](https://github.com/odonata/MegamediaContactos/blob/main/Artefactos/imagenes/Megamedia_Scuencia.png)
+![7](https://github.com/odonata/MegamediaContactos/blob/main/Artefactos/imagenes/Megamedia_Scuencia.png)
+![8](https://github.com/odonata/MegamediaContactos/blob/main/Artefactos/imagenes/Megamedia_Scuencia.png)
+![9](https://github.com/odonata/MegamediaContactos/blob/main/Artefactos/imagenes/Megamedia_Scuencia.png)
+![10](https://github.com/odonata/MegamediaContactos/blob/main/Artefactos/imagenes/Megamedia_Scuencia.png)
+![11](https://github.com/odonata/MegamediaContactos/blob/main/Artefactos/imagenes/Megamedia_Scuencia.png)
+![12](https://github.com/odonata/MegamediaContactos/blob/main/Artefactos/imagenes/Megamedia_Scuencia.png)
+![13](https://github.com/odonata/MegamediaContactos/blob/main/Artefactos/imagenes/Megamedia_Scuencia.png)
+![14](https://github.com/odonata/MegamediaContactos/blob/main/Artefactos/imagenes/Megamedia_Scuencia.png)
+![15](https://github.com/odonata/MegamediaContactos/blob/main/Artefactos/imagenes/Megamedia_Scuencia.png)
