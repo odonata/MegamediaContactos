@@ -71,9 +71,16 @@ y proceder a restaurar el backup:
 
 Paso a Paso:
 
-* Abrir y seleccionar herramientas > Restaurar Bakup
+* Abrir y seleccionar herramientas > Herramientas Backup
 
+![Restaurar Bakup](https://github.com/odonata/MegamediaContactos/blob/main/Artefactos/imagenes/herramientas_backup.png)
 
+* Seleccionar herramientas > Restaurar Bakup
+
+![Restaurar Bakup](https://github.com/odonata/MegamediaContactos/blob/main/Artefactos/imagenes/herramientas_backup.png)
+
+Esperar que termine la importacion al motor de datos y salir, se puede verificar entrando 
+al esquema publico y deberia ver la siguiente estrcutura:
 
 
 
