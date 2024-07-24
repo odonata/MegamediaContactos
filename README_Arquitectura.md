@@ -1,4 +1,4 @@
-# Conceptos, mSolución yb Arquitectura
+# Conceptos, Solución y Arquitectura
 
 ## Conceptualizacion de la solución para Megamedia
 
@@ -71,9 +71,7 @@ Clientes por área de negocios:
    * Tecnología: PostgreSQL
 
 
-![Arquitectura](https://github.com/odonata/MegamediaContactos/blob/main/Artefactos/imagenes/InicioApp.png)
-
-
+![Arquitectura](https://github.com/odonata/MegamediaContactos/blob/main/Artefactos/imagenes/MegamediaContactos_ArquitecturaComponentes.png)
 
 
 2. Diagrama de Secuencia
@@ -97,3 +95,4 @@ Clientes por área de negocios:
    
        * Devuelve el resultado al Front-End (Django).
 
+![Secuencia](https://github.com/odonata/MegamediaContactos/blob/main/Artefactos/imagenes/MegamediaContactos_ArquitecturaComponentes.png)
