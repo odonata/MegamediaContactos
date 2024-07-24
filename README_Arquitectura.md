@@ -79,13 +79,13 @@ por lo que SE modelÓ una base de datos de clientes que se basa en :
 	2.	Capa de Servicios (Java Spring Boot)
    
        * Recibe la solicitud.
-	    * Procesa la solicitud según el tipo de operación.
-	    * Realiza la operación correspondiente en la Base de Datos (PostgreSQL).
+       * Procesa la solicitud según el tipo de operación.
+       * Realiza la operación correspondiente en la Base de Datos (PostgreSQL).
    
 	3.	Base de Datos (PostgreSQL)
    
        * Ejecuta la operación solicitada (consulta, actualización, inserción o eliminación).
-	    * Devuelve el resultado a la Capa de Servicios (Java Spring Boot).
+       * Devuelve el resultado a la Capa de Servicios (Java Spring Boot).
 
 	4.	Capa de Servicios (Java Spring Boot)
    
