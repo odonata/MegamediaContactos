@@ -58,8 +58,18 @@ Entrar a la carpeta MegamediaContactosServiceAPI y ejecutar
 
 Eso descargará las dependencias descritas en el pom.xml y compilará generando un jar
 
-2. Compilar con maven
+2. Compilar con maven : mvn clean package [enter]
 
-Entrar a la carpeta donde se hizo el clone de git :
+Entrar a la carpeta donde se realizó el clone de git :
 
-![Compilar](https://github.com/odonata/MegamediaContactos/blob/main/Artefactos/imagenes/EstructuraDB.png)
+![Compilar](https://github.com/odonata/MegamediaContactos/blob/main/Artefactos/imagenes/compilar_mvn.png)
+
+Resultado de la compilación:
+
+![Resultado](https://github.com/odonata/MegamediaContactos/blob/main/Artefactos/imagenes/resultado_compilacion_mvn.png)
+
+Correr el apirest java springboot
+
+	java -jar MegamediaContactos_service_v1.jar
+
+
