@@ -1,6 +1,5 @@
 {% load static %}
 
-
 #datos-menu-groupbox {
     font-family: inherit;
     margin-top: 1px;
@@ -117,3 +116,51 @@
 }
 
 /* FIN DROPDOWN*/
+
+ /* Estilo general para el contenedor del clima */
+    #clima-info {
+        margin: 20px;
+    }
+
+    /* Estilo para el contenedor del gráfico */
+    #grafico {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    /* Estilo para la tabla de datos del clima */
+    #datos-clima {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    #datos-clima th, #datos-clima td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: left;
+    }
+
+    #datos-clima th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+    }
+
+    #datos-clima td {
+        color: #333;
+    }
+
+    /* Estilo para los th y td específicos según los divs */
+    #grafico img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    #datos-clima .titulo {
+        background-color: #f2f2f2;
+        font-weight: bold;
+    }
+
+    #datos-clima .valor {
+        color: #333;
+    }

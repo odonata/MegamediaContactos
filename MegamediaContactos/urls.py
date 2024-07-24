@@ -20,28 +20,30 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth import views as auth_views
 
-from MegamediaContactosApp.views.view_mant_areas import get_areas, mant_areas, del_area, set_area
+from MegamediaContactosApp.views.view_mant_areas import get_areas, mant_areas, del_area, set_area, upd_area
 from MegamediaContactosApp.views.view_mant_clientes import get_areas_registradas, mant_clientes, get_clientes_area, \
     set_cliente, upd_cliente, del_cliente
-from MegamediaContactosApp.views.view_mant_sistema import home, obtener_menus, pagina_noencontrada
+from MegamediaContactosApp.views.view_mant_sistema import home, obtener_menus, pagina_noencontrada, estadoTiempo
 
 urlpatterns = [
     path('logout/', LogoutView.as_view(next_page='/'), name='logout'),
     path('accounts/login/', LoginView.as_view(template_name='registration/login.html'), name='login'),  # Define tu vista de login aquí
     path('', home, name='home'),  # Página de inicio protegida
     path('admin/', admin.site.urls),
-    path('obtener_menus/',obtener_menus,name='obtener_menus'),
-    path('get_areas/',get_areas,name='get_areas'),
-    path('mant_areas/',mant_areas,name='mant_areas'),
-    path('del_area/<int:id_area>',del_area,name='del_area'),
-    path('set_area/',set_area,name='set_area'),
-    path('get_areas_registradas/',get_areas_registradas, name="get_areas_registradas"),
-    path('mant_clientes/',mant_clientes,name='mant_clientes'),
-    path('get_clientes_area/',get_clientes_area,name='get_clientes_area'),
-    path('set_cliente/',set_cliente,name='set_cliente'),
-    path('upd_cliente/',upd_cliente,name='upd_cliente'),
-    path('del_cliente/<int:id_cliente>',del_cliente,name='del_cliente'),
-    path('<str:not_found>/', pagina_noencontrada),
+    path('obtener_menus/',login_required(obtener_menus),name='obtener_menus'),
+    path('get_areas/',login_required(get_areas),name='get_areas'),
+    path('mant_areas/',login_required(mant_areas),name='mant_areas'),
+    path('del_area/<int:id_area>',login_required(del_area),name='del_area'),
+    path('set_area/',login_required(set_area),name='set_area'),
+    path('get_areas_registradas/',login_required(get_areas_registradas), name="get_areas_registradas"),
+    path('mant_clientes/',login_required(mant_clientes),name='mant_clientes'),
+    path('get_clientes_area/',login_required(get_clientes_area),name='get_clientes_area'),
+    path('set_cliente/',login_required(set_cliente),name='set_cliente'),
+    path('upd_cliente/',login_required(upd_cliente),name='upd_cliente'),
+    path('upd_area/',upd_area, name='upd_area'),
+    path('del_cliente/<int:cliente_id>',login_required(del_cliente),name='del_cliente'),
+    path('estadoTiempo/',estadoTiempo,name='estadoTiempo'),
+    path('<str:not_found>/', login_required(pagina_noencontrada)),
     # no agregar nada despues de esta linea, todos los nuevos urls debes
     # estar antes de str:not_found
 ]

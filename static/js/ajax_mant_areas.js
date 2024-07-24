@@ -1,6 +1,6 @@
 var paginaActual;
 var totalPaginas;
-
+var gbl_areaId = 0;
 warn_id.addEventListener('mouseover', (event) => {
   event.target.style.pointerEvents = 'none';
 });
@@ -37,7 +37,7 @@ function guardarArea() {
     .then(data => {
         if (data.resultado==='Exito'){
             Swal.fire('Exito', data.mensaje, 'Exito');
-            getAreas(url_get_areas,1,'inicio',filtroBusqueda);
+            getAreas(url_get_areas,1,'inicio',filtroBusqueda, 'NORMAL');
             limpiarFormulario();
         }else{
             // Si el resultado no es de éxito, mostrar mensaje de error
@@ -57,7 +57,7 @@ function handleKeyPress(event) {
 
 function buscarCategorias(){
     filtroBusqueda='FILTRO';
-    getAreas(url_get_areas,1,'inicio',filtroBusqueda);
+    getAreas(url_get_areas,1,'inicio',filtroBusqueda, 'NORMAL');
 
 }
 
@@ -65,15 +65,14 @@ function buscarCategorias(){
 *  Trae todas las areas registradas
 *  llamando a la vista : getAreas  de forma paginada
 * */
-function getAreas(pUrl, pagina, tipoCargaPagina, filtroBusquedatxt) {
+function getAreas(pUrl, pagina, tipoCargaPagina, filtroBusquedatxt, tipoBusqueda) {
     var PagTot = document.getElementById('PaginasTotales');
     var NumPag = document.getElementById('numeroPagina');
     var campoBusqueda = document.getElementById('campoBusqueda').value;
-
     NumPag.value = paginaActual;
 
     // Llamada AJAX para obtener los datos de los menús activos
-    urlPagina = pUrl + "?page=" + pagina + "&filtroBusqueda=" + filtroBusquedatxt + "&campoBusqueda=" + campoBusqueda;
+    urlPagina = pUrl + "?page=" + pagina + "&filtroBusqueda=" + filtroBusquedatxt + "&campoBusqueda=" + campoBusqueda+"&tipoBusqueda="+tipoBusqueda;
     $.ajax({
         url: urlPagina,
         dataType: 'json',
@@ -92,12 +91,14 @@ function getAreas(pUrl, pagina, tipoCargaPagina, filtroBusquedatxt) {
             tabla.empty(); // Limpiar la tabla antes de agregar nuevos datos
             $.each(results, function(index, resp) {
                 // Construir la fila de la tabla
-                var fila = $('<tr>').attr('data-hidden-value', resp.id_categoria)
+                var fila = $('<tr>').attr('data-hidden-value', resp.id)
                     .append($('<td style="text-align: center;">').text(resp.nombre))
                     .append($('<td style="text-align: center;">').text(resp.creacion))
                     .append($('<td style="text-align: center;">').text(resp.fecha_actualizacion))
                     .append($('<td style="text-align: center;">').text(resp.usuario))
-                    .append($('<td style="text-align: center;">').append($('<button>').addClass('btn btn-outline-danger').text('Eliminar Categoría').click(function() {
+                    .append($('<td style="text-align: center;">').append($('<button>').addClass('btn btn-outline-warning').text('Modificar').click(function() {
+                        modificarArea(resp.id,resp.nombre)})))
+                    .append($('<td style="text-align: center;">').append($('<button>').addClass('btn btn-outline-danger').text('Eliminar').click(function() {
                         eliminarArea(resp.id,resp.nombre);
                     })));
 
@@ -110,6 +111,69 @@ function getAreas(pUrl, pagina, tipoCargaPagina, filtroBusquedatxt) {
     });
 }
 
+function modificarArea(area_id, nombre   ){
+     getAreas(url_get_areas,1,'inicio', area_id, 'MODIFICACION');
+     $('#botonGuardar').prop('disabled', true);
+     $('#campoBusqueda').prop('disabled', true);
+     $('#botonModificar').show();
+     $('#botonCancelar').show();
+     $('#botonLimpiar').hide();
+     $('#categoria').val(nombre);
+     gbl_areaId=area_id;
+}
+
+// llamar a guardar  el nuevo producto
+function upd_area(tipoOperacion) {
+    // Validaciones
+    const nombre_area = $('#categoria').val();
+
+    if (!nombre_area) {
+        Swal.fire('Error', 'Debe agregar un nombre de area.', 'error');
+        return;
+    }
+
+    // Preparar datos para el envío
+    let formData = new FormData();
+    formData.append('nombre_area', nombre_area);
+    formData.append('area_id', gbl_areaId);
+    rest_path='/upd_area/';
+
+
+    // Envío AJAX
+    $.ajax({
+        url: rest_path, // URL del view de Django
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(response) {
+            if (response.resultado === 'Exito') {
+                Swal.fire('¡Éxito!', response.mensaje, 'success').then(() => {
+                    set_cancelar_area();
+                });
+            } else {
+                // Si el resultado no es de éxito, mostrar mensaje de error
+                Swal.fire('Error', response.mensaje, 'error');
+            }
+        },
+        error: function(error) {
+            Swal.fire('Error', 'Ocurrió un error al agregar el Área de Negocio.', 'error');
+        }
+    });
+}
+
+function set_cancelar_area(){
+    totalPaginas               = 0;
+    seleccionadoActual         = 0;
+    $('#botonGuardar').prop('disabled', false);
+    $('#botonModificar').hide();
+    $('#botonCancelar').hide();
+    $('#botonLimpiar').show();
+    $('#campoBusqueda').prop('disabled', false);
+    $('#categoria').val("");
+    gbl_areaId=0;
+    getAreas(url_get_areas,1,'inicio',filtroBusqueda,'NORMAL');
+}
 
 function eliminarArea(idArea , nomCategoria) {
     var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -135,7 +199,7 @@ function eliminarArea(idArea , nomCategoria) {
                          Swal.fire('¡Éxito!', response.mensaje, 'success').then(() => {
                             // Limpiar y Recargar la lista de categorías
                             limpiarFormulario();
-                            getAreas(url_get_areas, 1, 'inicio',filtroBusqueda);
+                            getAreas(url_get_areas, 1, 'inicio',filtroBusqueda,'NORMAL');
                          });
                     }else{
                          Swal.fire('Error', response.mensaje, 'error');
@@ -160,7 +224,7 @@ function eliminarArea(idArea , nomCategoria) {
 *
 * */
 document.getElementById("inicioPagina").addEventListener("click", function() {
-        getAreas(url_get_areas,1,'inicio',filtroBusqueda);
+        getAreas(url_get_areas,1,'inicio',filtroBusqueda,'NORMAL');
         paginaActual=1;
         NumPag.value=paginaActual;
     });
@@ -172,7 +236,7 @@ document.getElementById("anteriorPagina").addEventListener("click", function() {
                 paginaActual = 1;
             }
             NumPag.value=paginaActual;
-            getAreas(url_get_areas,paginaActual,'paginando',filtroBusqueda);
+            getAreas(url_get_areas,paginaActual,'paginando',filtroBusqueda,'NORMAL');
     });
 
 document.getElementById("siguientePagina").addEventListener("click", function() {
@@ -182,11 +246,11 @@ document.getElementById("siguientePagina").addEventListener("click", function() 
                 paginaActual = totalPaginas;
             }
             NumPag.value=paginaActual;
-            getAreas(url_get_areas,paginaActual,'paginando',filtroBusqueda);
+            getAreas(url_get_areas,paginaActual,'paginando',filtroBusqueda,'NORMAL');
     });
 
 document.getElementById("ultimaPagina").addEventListener("click", function() {
-            getAreas(url_get_areas,totalPaginas,'paginando',filtroBusqueda);
+            getAreas(url_get_areas,totalPaginas,'paginando',filtroBusqueda,'NORMAL');
             paginaActual=totalPaginas;
             NumPag.value=paginaActual;
     });
@@ -202,12 +266,6 @@ PagTot.value=totalPaginas;
 
 
 /* AJAX limpiar formulario*/
-
-function limpiarCampoWarnings(){
-    var camposInvalidos = document.getElementById('warn_id');
-    camposInvalidos.value='';
-    camposInvalidos.rows=1;
-}
 function limpiarFormulario() {
        paginaActual               = 1;
        totalPaginas               = 0;
@@ -215,7 +273,7 @@ function limpiarFormulario() {
        document.getElementById("categoria").value = ''; // Limpia el input de nombre de categoría
 
        $('#campoBusqueda').val("");
-       getAreas(url_get_areas,1,'inicio','SINFILTROBUSQUEDA');
+       getAreas(url_get_areas,1,'inicio','SINFILTROBUSQUEDA','NORMAL');
 
 }
 
@@ -226,34 +284,7 @@ window.top.location.href = '/';
 }
 
 
-
-
-
 function closeModal() {
     var modal = document.getElementById('modalResultado');
     modal.close();
-}
-/** para validaciones de formulario **/
-function validarCamposVacio() {
-    var cargo = document.getElementById('cargo_id').value.trim();
-
-
-    var mensaje ='';
-    var salida = 'V';
-    lineas=0;
-    // Verificar si el nombre está vacío
-    if (cargo == '' || /^\s+$/.test(cargo)) {
-        mensaje='El campo nombre de cargo  no puede estar vacío o solo espacios en blanco';
-        salida= 'F';
-        lineas++;
-    }
-
-
-    var respuesta = {
-        salida: salida,
-        mensaje: mensaje,
-        tlineas: lineas
-    };
-    var respuestaJson=JSON.stringify(respuesta);
-    return respuestaJson;
 }

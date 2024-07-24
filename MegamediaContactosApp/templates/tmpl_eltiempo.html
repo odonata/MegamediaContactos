@@ -1,0 +1,47 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.5">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    <title>{% block title %}El Tiempo{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'bootstrap5/css/bootstrap.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'sweetalert2/sweetalert2.min.css' %}">
+
+    <script src="{% static 'bootstrap5/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'Jquery/js/jquery.min.js' %}"></script>
+    <script src="{% static 'sweetalert2/sweetalert2.all.min.js' %}"></script>
+</head>
+<body style="overflow-y: auto;">
+
+    <div id="ct" class="container-fluid" style="width: 100%;" >
+            <div>
+                <div id="textoDiv">ESTADO DEL CLIMA</div>
+            </div>
+            <div id="grafico">
+                <!-- Imagen del gráfico se insertará aquí -->
+            </div>
+            <table id="datos-clima">
+                <!-- Datos del clima se insertarán aquí -->
+            </table>
+
+    </div>
+
+    <script src="/static/js/ajax_eltiempo.js"></script>
+
+    <script>
+         apiUrl = '{{ api_url }}';
+         apiPort = {{ api_port }};
+         ciudad = 'Santiago,CL';
+       $(document).ready(function () {
+            llamarApiElTiempo(apiUrl, apiPort, ciudad);
+            setInterval(() => llamarApiElTiempo(apiUrl, apiPort, ciudad), 10000);
+        });
+
+    </script>
+
+</body>
+</html>

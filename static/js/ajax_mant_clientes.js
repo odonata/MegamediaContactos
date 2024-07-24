@@ -1,7 +1,7 @@
 console.log('inicio carga script');
 var paginaActual;
 var totalPaginas;
-var glb_idProducto=0;
+var glb_clienteId=0;
 warn_id.addEventListener('mouseover', (event) => {
   event.target.style.pointerEvents = 'none';
 });
@@ -14,48 +14,50 @@ $(document).ready(function() {
 
 });
 
+// Función para validar el formato del correo electrónico
+function validarEmail(email) {
+    // Expresión regular para validar el formato del correo electrónico
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    return regex.test(email);
+}
 
 // llamar a guardar  el nuevo producto
-function set_producto(tipoOperacion) {
+function set_cliente(tipoOperacion) {
     // Validaciones
-    const nombre_cliente = $('#nombre_cliente').val();
-    const valorUnitario = $('#email_contacto').val();
-    const imagenProducto = $('#path_imagen_producto')[0].files[0];
-    const categoria = $('#categoria').val();
+    const nombre_cliente = $('#nombre_cliente');
+    const email_contacto = $('#email_contacto');
+    const fono_contacto = $('#fono_contacto');
+    const lista_areas = $('#lista_areas');
+    if (!nombre_cliente.val()) {
+        Swal.fire('Error', 'Debe agregar un nombre de cliente.', 'error');
+        return;
+    }
+    if (!validarEmail(email_contacto.val())) {
+        Swal.fire('Error', 'Debe tener un formato de correo electrónico', 'error');
+        return;
+    }
+    if(!fono_contacto.val()){
+       Swal.fire('Error', 'Debe ingresar un numero de telefono', 'error');
+        return;
 
-    if (!nombre_cliente) {
-        Swal.fire('Error', 'Debe agregar una descripción.', 'error');
-        return;
     }
-    if (!valorUnitario || isNaN(valorUnitario) || parseInt(valorUnitario) <= 0) {
-        Swal.fire('Error', 'El valor debe ser numérico y mayor a cero.', 'error');
-        return;
-    }
-    if(glb_idProducto==0){
-        if (!imagenProducto || !(imagenProducto.type === 'image/png' || imagenProducto.type === 'image/jpeg')) {
-            Swal.fire('Error', 'Debe agregar una imagen del producto en formato PNG o JPG.', 'error');
-        return;
-        }
-    }
-    if (!categoria || isNaN(categoria)) {
-        Swal.fire('Error', 'Debe seleccionar una categoría para el producto.', 'error');
+    if (!lista_areas.val() || isNaN(lista_areas.val())) {
+        Swal.fire('Error', 'Debe seleccionar un área de negocio para el cliente.', 'error');
         return;
     }
 
     // Preparar datos para el envío
     let formData = new FormData();
-    formData.append('nombre_cliente', nombre_cliente);
-    formData.append('habilitado', $('#habilitado').is(':checked'));
-    formData.append('email_contacto', valorUnitario);
-    formData.append('imagenProducto', imagenProducto);
-    formData.append('categoria', categoria);
-    formData.append('tipo_prod_promo', 'PRODUCTO');
+    formData.append('nombre_cliente', nombre_cliente.val());
+    formData.append('email_contacto', email_contacto.val());
+    formData.append('fono_contacto', fono_contacto.val());
+    formData.append('lista_areas', lista_areas.val());
 
     if(tipoOperacion=="NUEVO"){
-        rest_path='/set_producto/';
+        rest_path='/set_cliente/';
     }else{
-        rest_path='/upd_producto/';
-        formData.append('id_producto', glb_idProducto);
+        rest_path='/upd_cliente/';
+        formData.append('cliente_id', glb_clienteId);
     }
     console.log(rest_path);
     // Envío AJAX
@@ -66,20 +68,8 @@ function set_producto(tipoOperacion) {
         processData: false,
         contentType: false,
         success: function(response) {
-            if (response.resultado === 'Éxito') {
+            if (response.resultado === 'Exito') {
                 Swal.fire('¡Éxito!', response.mensaje, 'success').then(() => {
-                    // Limpiar formulario
-                    /*
-                    $('#nombre_cliente').val('');
-                    $('#email_contacto').val('');
-                    $('#path_imagen_producto').val('');
-                    $('#categoria').val('');
-                    $('#habilitado').prop('checked', false);
-                    document.getElementById("vistaPreviaImagenProducto").src = '';
-                    document.getElementById("vistaPreviaCategoria").src = '';
-                    $('#categoriaSeleccionada').empty();
-                    */
-                    // getClientesArea(url_get_clientes,1,'inicio',filtroBusqueda,'NORMAL');
                     set_cancelar();
                 });
             } else {
@@ -88,7 +78,7 @@ function set_producto(tipoOperacion) {
             }
         },
         error: function(error) {
-            Swal.fire('Error', 'Ocurrió un error al agregar el producto.', 'error');
+            Swal.fire('Error', 'Ocurrió un error al agregar el Cliente.', 'error');
         }
     });
 }
@@ -141,7 +131,7 @@ function getClientesArea(pUrl,pagina,tipoCargaPagina,filtroBusquedatxt , tipoBus
                 <td style="text-align: center;">${resp.nombre_area}</td>
                 <td style="text-align: center;">${resp.email_contacto}</td>
                 <td style="text-align: center;">${resp.fono_contacto}</td>
-                <td style="text-align: center;"><button class="btn btn-outline-warning" onclick="modificarCliente(${resp.cliente_id},'${resp.nombre_cliente}','${resp.email_contacto}',${resp.area_id},'${resp.fono_contacto}','${resp.email_contacto}')">Modificar</button></td>
+                <td style="text-align: center;"><button class="btn btn-outline-warning" onclick="modificarCliente(${resp.cliente_id},'${resp.nombre_cliente}','${resp.email_contacto}',${resp.area_id},'${resp.fono_contacto}')">Modificar</button></td>
                 <td style="text-align: center;"><button class="btn btn-outline-danger" onclick="eliminarCliente(${resp.cliente_id},'${resp.nombre_cliente}')">Eliminar</button></td>
                 </tr>`;
                 tabla.append(fila);
@@ -150,21 +140,18 @@ function getClientesArea(pUrl,pagina,tipoCargaPagina,filtroBusquedatxt , tipoBus
     });
 }
 
-
-function modificarCliente(id_producto, nombre_cliente , habilitado , email_contacto , id_categoria , base64Image_producto  ){
-    getClientesArea(url_get_clientes,1,'inicio',id_producto,'MODIFICACION');
+function modificarCliente(cliente_id, nombre_cliente   , email_contacto , area_id, fono_contacto  ){
+    getClientesArea(url_get_clientes,1,'inicio',cliente_id,'MODIFICACION');
      $('#botonGuardar').prop('disabled', true);
      $('#campoBusqueda').prop('disabled', true);
      $('#botonModificar').show();
      $('#botonCancelar').show();
      $('#botonLimpiar').hide();
      $('#nombre_cliente').val(nombre_cliente);
-     $('#habilitado').prop('checked', habilitado);
      $('#email_contacto').val(email_contacto);
-     $('#categoria_'+id_categoria).click();
-     var base64Image = "data:image/png;base64," + base64Image_producto;
-     $('#vistaPreviaImagenProducto').attr('src', base64Image);
-     glb_idProducto=id_producto;
+     $('#fono_contacto').val(fono_contacto);
+     $('#lista_areas').val(String(area_id))
+     glb_clienteId=cliente_id;
 }
 
 function set_cancelar(){
@@ -175,13 +162,12 @@ function set_cancelar(){
     $('#botonCancelar').hide();
     $('#botonLimpiar').show();
     $('#campoBusqueda').prop('disabled', false);
-    $('#nombre_cliente').val("");
-    $('#habilitado').prop('checked', true);
+    $('#categoria').val("");
     $('#email_contacto').val("");
+    $('#fono_contacto').val("");
     $('#campoBusqueda').val("");
-    document.getElementById("vistaPreviaImagenProducto").src = '';
-    $('#categoriaSeleccionada').empty();
-    glb_idProducto=0;
+    $('#lista_area').empty();
+    glb_clienteId=0;
     getClientesArea(url_get_clientes,1,'inicio','SINFILTROBUSQUEDA','NORMAL');
 }
 
@@ -190,7 +176,7 @@ function getAreas() {
         url: '/get_areas_registradas/',
         dataType: 'json',
         success: function (data) {
-            var lista = $('#lista-areas');
+            var lista = $('#lista_areas');
             lista.empty();
             $.each(data, function (index, reg) {
                 console.log(reg.id_area);
@@ -199,39 +185,6 @@ function getAreas() {
         }
     });
 }
-
-
-
-function verImagen(src) {
-    var contenedorImagen = document.createElement("div");
-    contenedorImagen.id = "contenedorImagen";
-    contenedorImagen.style.position = "fixed";
-    contenedorImagen.style.top = "0";
-    contenedorImagen.style.left = "0";
-    contenedorImagen.style.width = "100vw";
-    contenedorImagen.style.height = "100vh";
-    contenedorImagen.style.display = "flex";
-    contenedorImagen.style.justifyContent = "center";
-    contenedorImagen.style.alignItems = "center";
-    contenedorImagen.style.backgroundColor = "rgba(0,0,0,0.5)";
-
-    var imagen = document.createElement("img");
-    imagen.src = src;
-    imagen.style.maxWidth = "80%";
-    imagen.style.maxHeight = "80%";
-    imagen.style.margin = "auto";
-
-    contenedorImagen.appendChild(imagen);
-
-    contenedorImagen.onclick = function() {
-        document.body.removeChild(contenedorImagen);
-    };
-
-    document.body.appendChild(contenedorImagen);
-}
-
-
-
 
 /* AJAX Evento de manejo de botones para paginacion
 *
@@ -252,7 +205,7 @@ document.getElementById("anteriorPagina").addEventListener("click", function() {
             getClientesArea(url_get_clientes,paginaActual,'paginando',filtroBusqueda,'NORMAL');
     });
 
-function eliminarCliente(id_producto, nombre_cliente) {
+function eliminarCliente(cliente_id, nombre_cliente) {
     var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     titulo = `¿Eliminar Producto \n ${nombre_cliente} , estás seguro?`;
     Swal.fire({
@@ -266,14 +219,14 @@ function eliminarCliente(id_producto, nombre_cliente) {
     }).then((result) => {
       if (result.isConfirmed) {
             $.ajax({
-                url: '/del_producto/' + id_producto, // Ajusta esta URL a tu configuración
+                url: '/del_cliente/' + cliente_id, // Ajusta esta URL a tu configuración
                 type: 'DELETE', // Utiliza el método HTTP adecuado
                 headers: {
                     'X-CSRFToken': csrfToken
                 },
                 success: function(response) {
 
-                    if (response.resultado === 'Éxito') {
+                    if (response.resultado === 'Exito') {
                          Swal.fire('¡Éxito!', response.mensaje, 'success').then(() => {
                             // Limpiar Recargar la lista de productos
                             set_cancelar(); // se utiliza para limpiar
@@ -283,7 +236,7 @@ function eliminarCliente(id_producto, nombre_cliente) {
                     }
                 },
                 error: function(xhr, status, error) {
-                    Swal.fire('Error', "Al borrar Producto :"+status, 'error');
+                    Swal.fire('Error', "Al borrar Cliente :"+status, 'error');
                 }
             });
       }

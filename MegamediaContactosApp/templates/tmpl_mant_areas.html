@@ -31,6 +31,12 @@
                          <button id="botonGuardar" onclick="validarYGuardar()" class="btn btn-outline-primary btn-lg" >
                             Guardar
                         </button>
+                        <button id="botonModificar" onclick="upd_area('MODIFICAION')"  class="btn btn-outline-warning btn-lg" style="display: none;">
+                            Modificar
+                        </button>
+                         <button id="botonCancelar" onclick="set_cancelar_area()"  class="btn btn-outline-warning btn-lg" style="display: none;">
+                            Canecelar
+                        </button>
                         <button id="botonLimpiar" onclick="limpiarFormulario()"  class="btn btn-outline-primary btn-lg" >
                             Limpiar
                         </button>
@@ -77,7 +83,8 @@
                         <th data-width="20%">Creación</th>
                         <th data-width="10%">Fecha Actualización</th>
                         <th data-width="10%">Usuario Creacion / Modificación</th>
-                        <th data-width="10%">Acciones</th>
+                        <th data-width="10%">Modificar</th>
+                        <th data-width="10%">Eliminar</th>
                     </tr>
                 </thead>
                 <!-- Filas con datos del menú -->
@@ -106,7 +113,7 @@
          var url_get_areas             = "{% url 'get_areas' %}";
          var filtroBusqueda                 = 'SINFILTROBUSQUEDA';
 
-         $(document).ready(function () {getAreas(url_get_areas,1,'inicio',filtroBusqueda);});
+         $(document).ready(function () {getAreas(url_get_areas,1,'inicio',filtroBusqueda , 'NORMAL');});
 
 
     </script>

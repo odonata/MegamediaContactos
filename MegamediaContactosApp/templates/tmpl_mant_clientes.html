@@ -28,10 +28,10 @@
          <table>
                 <tr>
                     <td colspan="1">
-                         <button id="botonGuardar" onclick="set_producto('NUEVO')"  class="btn btn-outline-primary btn-lg" >
+                         <button id="botonGuardar" onclick="set_cliente('NUEVO')"  class="btn btn-outline-primary btn-lg" >
                             Guardar
                         </button>
-                         <button id="botonModificar" onclick="set_producto('MODIFICAION')"  class="btn btn-outline-warning btn-lg" style="display: none;">
+                         <button id="botonModificar" onclick="set_cliente('MODIFICAION')"  class="btn btn-outline-warning btn-lg" style="display: none;">
                             Modificar
                         </button>
                          <button id="botonCancelar" onclick="set_cancelar()"  class="btn btn-outline-warning btn-lg" style="display: none;">
@@ -59,9 +59,9 @@
                             <table id="datosProducto" style="border-collapse: separate; border-spacing: 20px;">
 
                                  <tr>
-                                    <td><label for="path_imagen">Seleccione Área</label></td>
+                                    <td><label for="lista_areas">Seleccione Área</label></td>
                                     <td>
-                                           <select id="lista-areas">
+                                           <select id="lista_areas">
                                                 <!-- Opciones cargadas dinámicamente -->
                                            </select>
                                     </td>
@@ -72,7 +72,7 @@
                                     <td><input type="text" id="email_contacto" maxlength="30" size="40" class="form-control"></td>
 
                                     <td><label for="Fono">* Fono: </label></td>
-                                    <td><input type="text" id="fono" maxlength="30" size="27" class="form-control"></td>
+                                    <td><input type="text" id="fono_contacto" maxlength="30" size="27" class="form-control"></td>
                                 </tr>
 
                             </table>

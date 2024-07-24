@@ -11,8 +11,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from rest_framework.decorators import api_view
 from django.http import JsonResponse
-from django.contrib.auth import logout
-from django.shortcuts import redirect
+from django.conf import settings
 from MegamediaContactosApp.models import Menu
 
 """
@@ -54,7 +53,8 @@ def home(request):
         grupos = usuariosGrupos.obtener_grupos_texto()
     return render(request, 'tmpl_mant_sistema.html', {'grupos':grupos })
 
-
+# VISTA PARA OBTENER  LOS MENUS
+# ----------------------------------------------------------------------------
 @api_view(['GET'])
 def obtener_menus(request):
     menu = Menu.objects.order_by('nombre_menu').\
@@ -64,3 +64,10 @@ def obtener_menus(request):
 # PERMITE ENVIAR A PAGINA NO ENCONTRADA
 def pagina_noencontrada(request,not_found):
     return render(request, 'tmpl_pagina_noencontrada.html', status=404)
+
+def estadoTiempo(request):
+    context = {
+        'api_url': settings.HOST_REST_API_URL,
+        'api_port': settings.HOST_REST_API_PORT,
+    }
+    return render(request, 'tmpl_eltiempo.html',context)
