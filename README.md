@@ -104,7 +104,7 @@ Url para ver el aplicartivo :
 
     http://localhost:8000
 
-![Inicio](https://github.com/odonata/MegamediaContactos/blob/main/Artefactos/imagenes/EstructuraDB.png)
+![Inicio](https://github.com/odonata/MegamediaContactos/blob/main/Artefactos/imagenes/InicioApp.png)
 
 
 
